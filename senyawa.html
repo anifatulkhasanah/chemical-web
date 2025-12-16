@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senyawa & Campuran - ChemicalChanges</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: 'Segoe UI', sans-serif; background: #fff; color: #1a3a7a; padding: 20px;}
+        .container {max-width: 1200px; margin: 0 auto;}
+        header {background: #fff; padding: 20px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); margin-bottom: 30px; border-bottom: 3px solid #1a3a7a; display: flex; justify-content: space-between; align-items: center;}
+        .logo {font-size: 32px; font-weight: 900; color: #1a3a7a;}
+        .back-btn {padding: 10px 20px; border: 2px solid #1a3a7a; background: #fff; color: #1a3a7a; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;}
+        .back-btn:hover {background: #1a3a7a; color: #fff;}
+        .page-title {background: linear-gradient(135deg, rgba(26,58,122,0.05), rgba(26,58,122,0.1)); padding: 40px; border-radius: 15px; margin-bottom: 40px; border-left: 5px solid #1a3a7a;}
+        .page-title h1 {color: #1a3a7a; font-size: 36px; margin-bottom: 10px;}
+        .page-title p {color: #1a3a7a; font-size: 16px;}
+        .content {background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); line-height: 1.8;}
+        .section {margin-bottom: 50px;}
+        .section h2 {color: #1a3a7a; font-size: 28px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #1a3a7a;}
+        .section h3 {color: #1a3a7a; font-size: 22px; margin-top: 30px; margin-bottom: 15px; padding-left: 15px; border-left: 4px solid #1a3a7a;}
+        .section p {color: #1a3a7a; font-size: 15px; margin-bottom: 15px; text-align: justify; line-height: 1.9;}
+        .comparison-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin: 25px 0;}
+        .comparison-card {background: #f0f4ff; padding: 25px; border-radius: 12px; border-left: 5px solid #1a3a7a;}
+        .comparison-card h4 {color: #1a3a7a; font-size: 18px; margin-bottom: 15px; font-weight: 600;}
+        .comparison-card ul {margin-left: 20px; margin-top: 10px;}
+        .comparison-card li {color: #1a3a7a; font-size: 14px; margin-bottom: 10px; line-height: 1.6;}
+        .visual-example {background: #fff; border: 2px solid #1a3a7a; border-radius: 12px; padding: 25px; margin: 20px 0; text-align: center;}
+        .visual-example h4 {color: #1a3a7a; margin-bottom: 20px; font-size: 18px; font-weight: 600;}
+        .visual-demo {display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 20px 0;}
+        .demo-item {background: #f0f4ff; padding: 20px; border-radius: 10px; border: 2px solid #1a3a7a;}
+        .demo-emoji {font-size: 48px; margin-bottom: 10px;}
+        .demo-label {color: #1a3a7a; font-weight: 600; font-size: 14px;}
+        .demo-desc {color: #1a3a7a; font-size: 12px; margin-top: 8px; line-height: 1.5;}
+        .highlight-box {background: #fff9c4; border-left: 5px solid #fbc02d; padding: 20px; border-radius: 8px; margin: 20px 0;}
+        .highlight-box p {color: #1a3a7a; font-size: 15px; margin: 0;}
+        .table-comparison {width: 100%; border-collapse: collapse; margin: 20px 0;}
+        .table-comparison th {background: #1a3a7a; color: #fff; padding: 15px; text-align: left; font-weight: 600; font-size: 14px;}
+        .table-comparison td {padding: 15px; border: 1px solid #ddd; color: #1a3a7a; font-size: 14px;}
+        .table-comparison tr:nth-child(even) {background: #f0f4ff;}
+        .real-example {background: #e8f5e9; border-left: 5px solid #4caf50; padding: 20px; border-radius: 8px; margin: 20px 0;}
+        .real-example h5 {color: #2e7d32; margin-bottom: 10px; font-weight: 600; font-size: 16px;}
+        .real-example p {color: #1a3a7a; font-size: 14px; line-height: 1.7;}
+        @media (max-width: 768px) {
+            header {flex-direction: column; gap: 15px;}
+            .logo {font-size: 24px;}
+            .comparison-grid {grid-template-columns: 1fr;}
+            .visual-demo {grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));}
+            .back-btn {width: 100%;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Chemical Changes</div>
+            <button class="back-btn" onclick="goBack()">← Kembali</button>
+        </header>
+
+        <div class="page-title">
+            <h1>Senyawa & Campuran</h1>
+            <p>Pelajari perbedaan senyawa dan campuran serta penerapannya dalam kehidupan sehari-hari</p>
+        </div>
+
+        <div class="content">
+            <!-- Bagian 1: Pengantar -->
+            <div class="section">
+                <h2>Pengertian Dasar</h2>
+                <p>
+                    Materi di alam ini tersusun dari berbagai zat. Untuk memahami komposisi materi, kita perlu mengenal istilah <strong>senyawa</strong> dan <strong>campuran</strong>. Kedua istilah ini sering membingungkan karena sama-sama merupakan gabungan dari dua zat atau lebih, namun memiliki karakteristik yang sangat berbeda.
+                </p>
+                <p>
+                    Perbedaan utama terletak pada bagaimana zat-zat tersebut bergabung. Dalam senyawa, zat-zat bergabung secara <strong>kimia</strong> dan tidak dapat dipisahkan dengan metode fisika biasa. Sebaliknya, dalam campuran, zat-zat hanya bercampur secara <strong>fisika</strong> dan masih mempertahankan sifat aslinya, serta dapat dipisahkan dengan mudah.
+                </p>
+            </div>
+
+            <!-- Bagian 2: Senyawa -->
+            <div class="section">
+                <h2>Senyawa (Compound)</h2>
+                <h3>Definisi Senyawa</h3>
+                <p>
+                    Senyawa adalah zat tunggal yang terbentuk dari penggabungan dua unsur atau lebih secara kimia dengan perbandingan massa yang tetap. Senyawa memiliki sifat yang berbeda dengan unsur-unsur penyusunnya.
+                </p>
+
+                <h3>Ciri-Ciri Senyawa</h3>
+                <div class="comparison-card">
+                    <ul>
+                        <li>✓ Tersusun dari minimal 2 unsur atau lebih</li>
+                        <li>✓ Perbandingan massa unsur penyusun selalu tetap</li>
+                        <li>✓ Sifatnya berbeda dengan sifat unsur penyusunnya</li>
+                        <li>✓ Dapat diuraikan menjadi unsur-unsurnya melalui reaksi kimia</li>
+                        <li>✓ Memiliki rumus kimia (contoh: H₂O, NaCl, CO₂)</li>
+                    </ul>
+                </div>
+
+                <div class="visual-example">
+                    <h4>Contoh Senyawa dan Unsur Penyusunnya</h4>
+                    <div class="visual-demo">
+                        <div class="demo-item">
+                            <div class="demo-emoji">💧</div>
+                            <div class="demo-label">Air (H₂O)</div>
+                            <div class="demo-desc">H (Hidrogen) + O (Oksigen) = Senyawa Air</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">🧂</div>
+                            <div class="demo-label">Garam (NaCl)</div>
+                            <div class="demo-desc">Na (Natrium) + Cl (Klorin) = Garam Dapur</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">🍵</div>
+                            <div class="demo-label">Gula (C₁₂H₂₂O₁₁)</div>
+                            <div class="demo-desc">C + H + O = Gula Pasir</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">❄️</div>
+                            <div class="demo-label">Karbon Dioksida (CO₂)</div>
+                            <div class="demo-desc">C (Karbon) + O (Oksigen) = Gas Asam</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="real-example">
+                    <h5>🔬 Fenomena Kehidupan Sehari-hari:</h5>
+                    <p><strong>Mengapa Air Murni Tidak Bisa Diperoleh dengan Cara Sederhana?</strong><br>
+                    Ketika Anda menguapkan air laut, Anda hanya menghilangkan pelarutnya (air), bukan menguraikan air menjadi hidrogen dan oksigen. Untuk menguraikan air menjadi H₂ dan O₂, Anda memerlukan proses elektrolisis (reaksi kimia menggunakan arus listrik). Ini membuktikan bahwa air adalah senyawa, bukan campuran.</p>
+                </div>
+            </div>
+
+            <!-- Bagian 3: Campuran -->
+            <div class="section">
+                <h2>Campuran (Mixture)</h2>
+                <h3>Definisi Campuran</h3>
+                <p>
+                    Campuran adalah kombinasi dua zat atau lebih yang bercampur secara fisika tanpa mengalami reaksi kimia. Dalam campuran, setiap zat penyusun tetap mempertahankan sifat aslinya dan perbandingan massanya dapat berubah-ubah.
+                </p>
+
+                <h3>Ciri-Ciri Campuran</h3>
+                <div class="comparison-card">
+                    <ul>
+                        <li>✓ Tersusun dari minimal 2 zat atau lebih</li>
+                        <li>✓ Perbandingan massa zat penyusun dapat bervariasi</li>
+                        <li>✓ Sifatnya merupakan kombinasi dari sifat-sifat penyusunnya</li>
+                        <li>✓ Dapat dipisahkan dengan metode fisika (penyaringan, penguapan, dll)</li>
+                        <li>✓ Tidak memiliki rumus kimia tetap</li>
+                    </ul>
+                </div>
+
+                <h3>Jenis-Jenis Campuran</h3>
+                
+                <h4 style="color: #1a3a7a; margin: 20px 0 15px 0; font-size: 16px; font-weight: 600;">a) Campuran Homogen</h4>
+                <p>
+                    Campuran homogen adalah campuran yang tidak dapat dibedakan zat-zat penyusunnya karena bercampur secara merata. Tampilan seragam di semua bagiannya.
+                </p>
+                <div class="visual-example">
+                    <h4>Contoh Campuran Homogen</h4>
+                    <div class="visual-demo">
+                        <div class="demo-item">
+                            <div class="demo-emoji">🍵</div>
+                            <div class="demo-label">Larutan Gula</div>
+                            <div class="demo-desc">Gula larut merata dalam air</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">☕</div>
+                            <div class="demo-label">Kopi</div>
+                            <div class="demo-desc">Kopi bubuk + air = larutan homogen</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">🍶</div>
+                            <div class="demo-label">Sirup</div>
+                            <div class="demo-desc">Sirup dan air bercampur merata</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">💨</div>
+                            <div class="demo-label">Udara</div>
+                            <div class="demo-desc">Campuran N₂, O₂, Ar, dll</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 style="color: #1a3a7a; margin: 20px 0 15px 0; font-size: 16px; font-weight: 600;">b) Campuran Heterogen</h4>
+                <p>
+                    Campuran heterogen adalah campuran yang dapat dibedakan zat-zat penyusunnya dengan jelas karena tidak bercampur merata. Zat penyusun tetap terlihat dengan karakteristik yang berbeda.
+                </p>
+                <div class="visual-example">
+                    <h4>Contoh Campuran Heterogen</h4>
+                    <div class="visual-demo">
+                        <div class="demo-item">
+                            <div class="demo-emoji">🏖️</div>
+                            <div class="demo-label">Pasir & Air</div>
+                            <div class="demo-desc">Pasir tidak larut dalam air</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">🥗</div>
+                            <div class="demo-label">Salad</div>
+                            <div class="demo-desc">Sayuran tetap terpisah</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">🥛</div>
+                            <div class="demo-label">Susu Murni</div>
+                            <div class="demo-desc">Partikel lemak tidak larut</div>
+                        </div>
+                        <div class="demo-item">
+                            <div class="demo-emoji">🧂</div>
+                            <div class="demo-label">Pasir + Kerikil</div>
+                            <div class="demo-desc">Ukuran berbeda, terlihat jelas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bagian 4: Perbandingan Senyawa vs Campuran -->
+            <div class="section">
+                <h2>Perbandingan Senyawa dan Campuran</h2>
+                <table class="table-comparison">
+                    <thead>
+                        <tr>
+                            <th>Aspek</th>
+                            <th>Senyawa</th>
+                            <th>Campuran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Komposisi</strong></td>
+                            <td>Unsur-unsur bergabung secara kimia</td>
+                            <td>Zat-zat bercampur secara fisika</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Perbandingan Massa</strong></td>
+                            <td>Selalu tetap dan pasti</td>
+                            <td>Dapat berubah-ubah</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sifat Zat</strong></td>
+                            <td>Berbeda dengan sifat unsur penyusunnya</td>
+                            <td>Sama dengan sifat zat penyusunnya</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pemisahan</strong></td>
+                            <td>Hanya dengan reaksi kimia</td>
+                            <td>Dengan metode fisika (penyaringan, penguapan, dll)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rumus Kimia</strong></td>
+                            <td>Memiliki rumus kimia tetap (H₂O, NaCl)</td>
+                            <td>Tidak memiliki rumus kimia tetap</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contoh</strong></td>
+                            <td>Air, Garam Dapur, Gula, CO₂</td>
+                            <td>Larutan Gula, Udara, Susu, Salad</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Bagian 5: Fenomena Sehari-hari -->
+            <div class="section">
+                <h2>Fenomena Senyawa & Campuran dalam Kehidupan Sehari-hari</h2>
+
+                <div class="real-example">
+                    <h5>1️⃣ Minum Teh Manis</h5>
+                    <p>Ketika Anda membuat teh manis dengan menambahkan gula ke air panas, Anda membuat <strong>campuran homogen</strong>. Gula larut dalam air tetapi tetap bersifat gula, dan air tetap bersifat air. Jika diuapkan, air akan hilang tetapi gula tetap tertinggal di cangkir.</p>
+                </div>
+
+                <div class="real-example">
+                    <h5>2️⃣ Memasak Nasi Goreng</h5>
+                    <p>Nasi goreng yang Anda masak adalah <strong>campuran heterogen</strong> karena nasi, sayuran, telur, dan bumbu tetap dapat dibedakan. Setiap komponen mempertahankan sifat aslinya meskipun sudah tercampur.</p>
+                </div>
+
+                <div class="real-example">
+                    <h5>3️⃣ Pembuatan Perhiasan Emas</h5>
+                    <p>Emas 18 karat (yang sering digunakan untuk perhiasan) bukan emas murni melainkan hasil <strong>campuran emas dengan logam lain</strong> (tembaga, perak, dll). Perbandingan massanya dapat bervariasi sesuai kebutuhan, sehingga itu adalah campuran, bukan senyawa.</p>
+                </div>
+
+                <div class="real-example">
+                    <h5>4️⃣ Rusting pada Logam (Pengkaratan)</h5>
+                    <p>Ketika besi berkarat, besi bereaksi dengan oksigen membentuk <strong>senyawa baru</strong> bernama oksida besi (Fe₂O₃). Ini adalah reaksi kimia, bukan sekedar pencampuran. Karat memiliki sifat berbeda dari besi murni dan tidak dapat dipisahkan dengan mudah.</p>
+                </div>
+            </div>
+
+            <!-- Bagian 6: Ringkasan -->
+            <div class="section">
+                <h2>Ringkasan Penting</h2>
+                <div class="highlight-box">
+                    <p>
+                        <strong>Kunci Membedakan Senyawa dan Campuran:</strong><br><br>
+                        🔑 <strong>SENYAWA</strong> = Penggabungan KIMIA, perbandingan tetap, sifat berbeda, dipisah dengan reaksi kimia<br><br>
+                        🔑 <strong>CAMPURAN</strong> = Penggabungan FISIKA, perbandingan berubah, sifat sama, dipisah dengan cara fisika<br><br>
+                        💡 <strong>Ingat:</strong> Jika bisa dipisahkan dengan cara fisika (saring, uap, dst), maka itu CAMPURAN. Jika hanya bisa dipisahkan dengan reaksi kimia, maka itu SENYAWA.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
