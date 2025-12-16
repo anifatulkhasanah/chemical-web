@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - ChemicalChanges</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a3a7a;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(26, 58, 122, 0.1);
+            margin-bottom: 30px;
+            border-bottom: 3px solid #1a3a7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1a3a7a;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            border: 2px solid #1a3a7a;
+            background: white;
+            color: #1a3a7a;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #1a3a7a;
+            color: white;
+        }
+
+        .page-title {
+            background: linear-gradient(135deg, rgba(26, 58, 122, 0.05), rgba(26, 58, 122, 0.1));
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #1a3a7a;
+        }
+
+        .page-title h1 {
+            color: #1a3a7a;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            color: #1a3a7a;
+            font-size: 16px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(26, 58, 122, 0.1);
+        }
+
+        .question-card {
+            background: #f9fbff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 5px solid #1a3a7a;
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        .question-number {
+            color: #1a3a7a;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            color: #1a3a7a;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #1a3a7a;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            color: #1a3a7a;
+        }
+
+        .option:hover {
+            background: #f0f4ff;
+        }
+
+        .option.selected {
+            background: #1a3a7a;
+            color: white;
+        }
+
+        .option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .feedback {
+            background: #f0f4ff;
+            border-left: 4px solid #1a3a7a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            line-height: 1.8;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct-feedback {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+
+        .feedback.incorrect-feedback {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a3a7a;
+        }
+
+        .feedback.correct-feedback .feedback-title {
+            color: #2e7d32;
+        }
+
+        .feedback.incorrect-feedback .feedback-title {
+            color: #c62828;
+        }
+
+        .feedback-text {
+            color: #1a3a7a;
+            font-size: 14px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #1a3a7a;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #0f2347;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 58, 122, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #1a3a7a;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, rgba(26, 58, 122, 0.05), rgba(26, 58, 122, 0.1));
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .score-display.show {
+            display: block;
+        }
+
+        .score-display h2 {
+            color: #1a3a7a;
+            margin-bottom: 10px;
+        }
+
+        .score-display p {
+            color: #1a3a7a;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .page-title {
+                padding: 30px;
+            }
+
+            .page-title h1 {
+                font-size: 28px;
+            }
+
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Chemical Changes</div>
+            <button class="back-btn" onclick="goBack()">← Kembali</button>
+        </header>
+
+        <div class="page-title">
+            <h1>Quiz Interaktif</h1>
+            <p>Uji pemahaman Anda tentang materi perubahan fisika dan kimia</p>
+        </div>
+
+        <div class="quiz-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="score-display" id="scoreDisplay">
+                <h2>Selesai! 🎉</h2>
+                <p>Skor Anda: <strong id="scoreText">0</strong>/5</p>
+            </div>
+
+            <!-- Soal 1 -->
+            <div class="question-card active">
+                <div class="question-number">Soal 1 dari 5</div>
+                <div class="question-text">Ketika kita memanaskan margarin, margarin akan meleleh, dan setelah didiamkan margarin akan mengeras kembali. Jelaskan perubahan yang terjadi pada margarin!</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 1, 'A', false)">A. Kimia, karena margarin membentuk zat baru saat dipanaskan.</div>
+                    <div class="option" onclick="selectOption(this, 1, 'B', false)">B. Kimia, karena sifat margarin berubah secara permanen setelah meleleh.</div>
+                    <div class="option" onclick="selectOption(this, 1, 'C', true)">C. Fisika, karena hanya terjadi perubahan wujud tanpa pembentukan zat baru.</div>
+                    <div class="option" onclick="selectOption(this, 1, 'D', false)">D. Fisika, karena margarin mengalami reaksi oksidasi saat dipanaskan.</div>
+                </div>
+                <div class="feedback" id="feedback1">
+                    <div class="feedback-title" id="feedbackTitle1"></div>
+                    <div class="feedback-text" id="feedbackText1"></div>
+                </div>
+            </div>
+
+            <!-- Soal 2 -->
+            <div class="question-card">
+                <div class="question-number">Soal 2 dari 5</div>
+                <div class="question-text">Kertas bisa mengalami dua jenis perubahan: diremas (fisika) atau dibakar (kimia). Guru meminta siswa menentukan prinsip ilmiah yang dapat digunakan untuk membedakan jenis perubahan suatu zat. Manakah prinsip yang paling tepat?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 2, 'A', false)">A. Perubahan fisika terjadi jika bentuk berubah; perubahan kimia terjadi jika warna berubah.</div>
+                    <div class="option" onclick="selectOption(this, 2, 'B', true)">B. Perubahan fisika terjadi jika tidak terbentu zat baru; perubahan kimia terjadi jika terbentuk zat baru dengan sifat yang berbeda.</div>
+                    <div class="option" onclick="selectOption(this, 2, 'C', false)">C. Semua pemanasan menghasilkan perubahan fisika; semua pendinginan menghasilkan perubahan kimia.</div>
+                    <div class="option" onclick="selectOption(this, 2, 'D', false)">D. Perubahan kimia selalu bisa dibalik; perubahan fisika selalu bersifat permanen.</div>
+                </div>
+                <div class="feedback" id="feedback2">
+                    <div class="feedback-title" id="feedbackTitle2"></div>
+                    <div class="feedback-text" id="feedbackText2"></div>
+                </div>
+            </div>
+
+            <!-- Soal 3 -->
+            <div class="question-card">
+                <div class="question-number">Soal 3 dari 5</div>
+                <div class="question-text">Dalam sebuah percobaan, lilin dipanaskan hingga meleleh. Setelah itu, bagian yang meleleh dibiarkan membeku kembali. Namun, sumbu lilin yang terbakar menghasilkan asap dan jelaga. Manakah analisis yang paling tepat?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 3, 'A', false)">A. Semua perubahan pada lilin bersifat fisika karena lilin dapat membeku kembali.</div>
+                    <div class="option" onclick="selectOption(this, 3, 'B', true)">B. Melelehnya lilin termasuk perubahan fisika, tetapi pembakaran sumbu lilin termasuk perubahan kimia karena menghasilkan zat baru.</div>
+                    <div class="option" onclick="selectOption(this, 3, 'C', false)">C. Melelehnya lilin termasuk perubahan kimia, pembakaran sumbu termasuk perubahan fisika.</div>
+                    <div class="option" onclick="selectOption(this, 3, 'D', false)">D. Semua perubahan bersifat kimia karena melibatkan panas.</div>
+                </div>
+                <div class="feedback" id="feedback3">
+                    <div class="feedback-title" id="feedbackTitle3"></div>
+                    <div class="feedback-text" id="feedbackText3"></div>
+                </div>
+            </div>
+
+            <!-- Soal 4 -->
+            <div class="question-card">
+                <div class="question-number">Soal 4 dari 5</div>
+                <div class="question-text">Sebuah laboratorium ingin memastikan bahwa zat X hanya mengalami perubahan fisika ketika dipanaskan. Mereka mempertimbangkan indikator berikut: 1) gas atau endapan muncul, 2) Wujud berubah tetapi massa tetap, 3) Tidak muncul bau baru, 4) Zat baru terbentuk, 5) Dapat kembali ke bentuk semula. Indikator kombinasi mana yang paling kuat menunjukkan perubahan fisika?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 4, 'A', false)">A. 1, 3 dan 4</div>
+                    <div class="option" onclick="selectOption(this, 4, 'B', true)">B. 2 dan 5</div>
+                    <div class="option" onclick="selectOption(this, 4, 'C', false)">C. 1 dan 2</div>
+                    <div class="option" onclick="selectOption(this, 4, 'D', false)">D. 1, 4 dan 5</div>
+                </div>
+                <div class="feedback" id="feedback4">
+                    <div class="feedback-title" id="feedbackTitle4"></div>
+                    <div class="feedback-text" id="feedbackText4"></div>
+                </div>
+            </div>
+
+            <!-- Soal 5 -->
+            <div class="question-card">
+                <div class="question-number">Soal 5 dari 5</div>
+                <div class="question-text">Dalam sebuah penelitian, siswa memanaskan campuran dua zat: padatan A dan cairan B. Setelah dipanaskan, terjadi beberapa pengamatan: (1) Volume total campuran berkurang, (2) Tidak muncul bau baru, (3) Padatan A tetap ada tetapi ukurannya mengecil, (4) Cairan B menguap dan dapat dikondensasi kembali menjadi cairan murni, (5) Tidak terbentuk endapan atau warna baru. Berdasarkan data tersebut, analisis mana yang paling tepat?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this, 5, 'A', false)">A. Perubahan kimia terjadi karena volume berkurang dan ukuran padatan mengecil.</div>
+                    <div class="option" onclick="selectOption(this, 5, 'B', true)">B. Perubahan fisika terjadi karena tidak muncul zat baru dan cairan B hanya berubah wujud.</div>
+                    <div class="option" onclick="selectOption(this, 5, 'C', false)">C. Perubahan kimia terjadi karena pemanasan selalu menyebabkan reaksi kimia.</div>
+                    <div class="option" onclick="selectOption(this, 5, 'D', false)">D. Perubahan kimia dan fisika terjadi sekaligus karena dua jenis zat terlibat.</div>
+                </div>
+                <div class="feedback" id="feedback5">
+                    <div class="feedback-title" id="feedbackTitle5"></div>
+                    <div class="feedback-text" id="feedbackText5"></div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary" id="prevBtn" onclick="previousQuestion()" disabled>← Sebelumnya</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Selanjutnya →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        let score = 0;
+        let answered = [false, false, false, false, false];
+        let correctAnswers = [true, true, true, true, true];
+
+        const feedbackData = {
+            1: {
+                correct: "Tepat sekali!",
+                incorrect: "Jawaban kamu kurang tepat.",
+                text: "Melehnya margarin dan mengeras kembali merupakan perubahan fisika, karena hanya terjadi perubahan wujud (padat → cair → padat) tanpa menghasilkan zat baru. Struktur kimianya tetap sama, hanya jarak antarmolekul yang berubah karena pengaruh suhu."
+            },
+            2: {
+                correct: "Tepat sekali!",
+                incorrect: "Jawaban kamu kurang tepat.",
+                text: "Perubahan fisika ditandai oleh tidak adanya zat baru (misalnya kertas diremas hanya berubah bentuk). Sebaliknya, perubahan kimia menghasilkan zat baru dengan sifat berbeda (misalnya kertas dibakar menjadi abu dan gas). Ini adalah prinsip dasar untuk membedakan kedua perubahan tersebut."
+            },
+            3: {
+                correct: "Tepat sekali!",
+                incorrect: "Jawaban kamu kurang tepat.",
+                text: "Melelehnya lilin merupakan perubahan fisika karena hanya terjadi perubahan wujud dari padat → cair → padat tanpa membentuk zat baru. Molekul lilin tetap sama, hanya jarak antarpartikel yang berubah akibat suhu. Sebaliknya, pembakaran sumbu lilin adalah perubahan kimia. Pada proses ini terjadi reaksi oksidasi yang menghasilkan zat baru seperti karbon dioksida (CO₂), uap air (H₂O), jelaga (karbon padat), dan berbagai senyawa volatil."
+            },
+            4: {
+                correct: "Tepat sekali!",
+                incorrect: "Jawaban kamu kurang tepat.",
+                text: "Kamu sudah bisa memilih indikator perubahan fisika. Perubahan wujud tanpa perubahan massa serta kemampuan untuk kembali ke keadaan semula adalah bukti kuat bahwa tidak ada reaksi kimia yang terjadi. Ini menunjukkan pemahaman yang baik tentang sifat dasar perubahan fisika yang reversibel dan tidak menghasilkan zat baru."
+            },
+            5: {
+                correct: "Hebat!",
+                incorrect: "Jawaban kamu belum tepat.",
+                text: "Tidak adanya zat baru, tidak muncul bau baru, tidak ada perubahan warna, dan fakta bahwa cairan B dapat kembali ke bentuk semula melalui kondensasi menunjukkan perubahan fisika. Penurunan volume serta mengecilnya padatan hanya akibat perubahan wujud dan perpindahan massa, bukan reaksi kimia."
+            }
+        };
+
+        function selectOption(element, questionNum, answer, isCorrect) {
+            const options = element.parentElement.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+
+            if (isCorrect) {
+                element.classList.add('correct');
+                if (!answered[questionNum - 1]) {
+                    score++;
+                    answered[questionNum - 1] = true;
+                }
+            } else {
+                element.classList.add('incorrect');
+                answered[questionNum - 1] = true;
+                options.forEach(opt => {
+                    if (opt.textContent.includes('C.') || opt.textContent.includes('B.') || opt.textContent.includes('B. Perubahan') || opt.textContent.includes('B. 2 dan 5') || opt.textContent.includes('B. Perubahan fisika')) {
+                        if (isAnswerCorrect(opt.textContent, questionNum)) {
+                            opt.classList.add('correct');
+                        }
+                    }
+                });
+            }
+
+            const feedback = document.getElementById(`feedback${questionNum}`);
+            const feedbackTitle = document.getElementById(`feedbackTitle${questionNum}`);
+            const feedbackText = document.getElementById(`feedbackText${questionNum}`);
+
+            if (isCorrect) {
+                feedback.classList.add('correct-feedback', 'show');
+                feedbackTitle.textContent = feedbackData[questionNum].correct;
+            } else {
+                feedback.classList.add('incorrect-feedback', 'show');
+                feedbackTitle.textContent = feedbackData[questionNum].incorrect;
+            }
+            feedbackText.textContent = feedbackData[questionNum].text;
+        }
+
+        function isAnswerCorrect(optionText, questionNum) {
+            const correctLetters = ['C', 'B', 'B', 'B', 'B'];
+            return optionText.includes(correctLetters[questionNum - 1] + '.');
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                showScore();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function showQuestion() {
+            const cards = document.querySelectorAll('.question-card');
+            cards.forEach(card => card.classList.remove('active'));
+            cards[currentQuestion - 1].classList.add('active');
+
+            updateButtons();
+            updateProgress();
+        }
+
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 1;
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestion === totalQuestions) {
+                nextBtn.textContent = 'Lihat Hasil →';
+            } else {
+                nextBtn.textContent = 'Selanjutnya →';
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showScore() {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            document.getElementById('scoreText').textContent = score;
+            scoreDisplay.classList.add('show');
+
+            const cards = document.querySelectorAll('.question-card');
+            cards.forEach(card => card.classList.remove('active'));
+
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.textContent = 'Ulangi Quiz';
+            nextBtn.onclick = resetQuiz;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 1;
+            score = 0;
+            answered = [false, false, false, false, false];
+
+            document.getElementById('scoreDisplay').classList.remove('show');
+            document.querySelectorAll('.feedback').forEach(f => f.classList.remove('show', 'correct-feedback', 'incorrect-feedback'));
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+
+            showQuestion();
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        updateButtons();
+        updateProgress();
+    </script>
+</body>
+</html>
