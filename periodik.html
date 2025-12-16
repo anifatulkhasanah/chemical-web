@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabel Periodik - ChemicalChanges</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: 'Segoe UI', sans-serif; background: #fff; color: #1a3a7a; padding: 20px;}
+        .container {max-width: 1400px; margin: 0 auto;}
+        header {background: #fff; padding: 20px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); margin-bottom: 30px; border-bottom: 3px solid #1a3a7a; display: flex; justify-content: space-between; align-items: center;}
+        .logo {font-size: 32px; font-weight: 900; color: #1a3a7a;}
+        .back-btn {padding: 10px 20px; border: 2px solid #1a3a7a; background: #fff; color: #1a3a7a; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;}
+        .back-btn:hover {background: #1a3a7a; color: #fff;}
+        .page-title {background: linear-gradient(135deg, rgba(26,58,122,0.05), rgba(26,58,122,0.1)); padding: 40px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #1a3a7a;}
+        .page-title h1 {color: #1a3a7a; font-size: 36px; margin-bottom: 10px;}
+        .page-title p {color: #1a3a7a; font-size: 16px;}
+        .legend {background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); margin-bottom: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px;}
+        .legend-item {padding: 10px; border-radius: 8px; text-align: center; font-size: 13px; font-weight: 600;}
+        .legend-metal {background: #ff9999; color: #fff;}
+        .legend-nonmetal {background: #a0e0a0; color: #fff;}
+        .legend-semimetal {background: #ffcc99; color: #fff;}
+        .legend-halogen {background: #ffff99; color: #1a3a7a;}
+        .legend-noble {background: #99ccff; color: #fff;}
+        .legend-lanthanide {background: #cc99ff; color: #fff;}
+        .legend-actinide {background: #ff99cc; color: #fff;}
+        .periodic-table {background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); margin-bottom: 30px; overflow-x: auto;}
+        .table-grid {display: grid; grid-template-columns: repeat(18, 1fr); gap: 6px; min-width: 1200px;}
+        .element {padding: 10px; border-radius: 6px; cursor: pointer; text-align: center; font-size: 11px; border: 2px solid rgba(26,58,122,0.2); min-height: 70px; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: all 0.3s;}
+        .element:hover {transform: translateY(-3px); box-shadow: 0 6px 15px rgba(26,58,122,0.3); border-color: #1a3a7a;}
+        .element-number {font-size: 8px; opacity: 0.7;}
+        .element-symbol {font-size: 20px; font-weight: bold; color: #1a3a7a; margin: 2px 0;}
+        .element-name {font-size: 9px; margin-bottom: 2px;}
+        .element-mass {font-size: 7px; opacity: 0.8;}
+        .metal {background: #ff9999; color: #fff;}
+        .nonmetal {background: #a0e0a0; color: #fff;}
+        .semimetal {background: #ffcc99; color: #fff;}
+        .halogen {background: #ffff99; color: #1a3a7a;}
+        .noble {background: #99ccff; color: #fff;}
+        .lanthanide {background: #cc99ff; color: #fff;}
+        .actinide {background: #ff99cc; color: #fff;}
+        .modal {display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); overflow-y: auto;}
+        .modal.show {display: block;}
+        .modal-content {background: #fff; margin: 5% auto; padding: 30px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 600px; border-left: 5px solid #1a3a7a;}
+        .modal-header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f4ff;}
+        .modal-header h2 {color: #1a3a7a; font-size: 28px;}
+        .close-btn {background: 0; border: 0; font-size: 28px; cursor: pointer; color: #1a3a7a; transition: all 0.3s;}
+        .close-btn:hover {transform: rotate(90deg);}
+        .info-detail {display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;}
+        .detail-item {background: #f0f4ff; padding: 12px; border-radius: 8px; border-left: 3px solid #1a3a7a;}
+        .detail-label {font-weight: 600; color: #1a3a7a; font-size: 12px;}
+        .detail-value {color: #1a3a7a; font-size: 14px; margin-top: 4px;}
+        .info-section {margin-bottom: 20px;}
+        .info-section h3 {color: #1a3a7a; font-size: 16px; margin-bottom: 8px; border-bottom: 2px solid #f0f4ff; padding-bottom: 5px;}
+        .info-section p {color: #1a3a7a; font-size: 14px; line-height: 1.7; text-align: justify;}
+        @media (max-width: 768px) {
+            header {flex-direction: column; gap: 15px;}
+            .logo {font-size: 24px;}
+            .table-grid {grid-template-columns: repeat(9, 1fr);}
+            .element {min-height: 60px; padding: 8px;}
+            .element-symbol {font-size: 16px;}
+            .back-btn {width: 100%;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Chemical Changes</div>
+            <button class="back-btn" onclick="goBack()">← Kembali</button>
+        </header>
+
+        <div class="page-title">
+            <h1>Tabel Periodik Interaktif - 118 Unsur</h1>
+            <p>Klik pada setiap elemen untuk melihat informasi lengkap dan penggunaannya</p>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item legend-metal">Logam</div>
+            <div class="legend-item legend-nonmetal">Non-Logam</div>
+            <div class="legend-item legend-semimetal">Semi-Logam</div>
+            <div class="legend-item legend-halogen">Halogen</div>
+            <div class="legend-item legend-noble">Gas Mulia</div>
+            <div class="legend-item legend-lanthanide">Lantanida</div>
+            <div class="legend-item legend-actinide">Aktinida</div>
+        </div>
+
+        <div class="periodic-table">
+            <div class="table-grid" id="tableGrid"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="elementModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalElementName"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalInfo"></div>
+        </div>
+    </div>
+
+    <script>
+        const allElements = [
+            {n:1, s:'H', nm:'Hidrogen', m:1.008, t:'nonmetal', r:1, c:1, d:'Elemen paling ringan', u:'Bahan bakar, ammonia'},
+            {n:2, s:'He', nm:'Helium', m:4.003, t:'noble', r:1, c:18, d:'Gas mulia tidak reaktif', u:'Balon, MRI, selam'},
+            {n:3, s:'Li', nm:'Litium', m:6.941, t:'metal', r:2, c:1, d:'Logam paling ringan', u:'Baterai, obat'},
+            {n:4, s:'Be', nm:'Berilium', m:9.012, t:'metal', r:2, c:2, d:'Logam ringan keras', u:'Paduan, medis'},
+            {n:5, s:'B', nm:'Boron', m:10.811, t:'semimetal', r:2, c:13, d:'Semi-logam keras', u:'Kaca, detergen'},
+            {n:6, s:'C', nm:'Karbon', m:12.011, t:'nonmetal', r:2, c:14, d:'Dasar kehidupan organik', u:'Batu bara, plastik'},
+            {n:7, s:'N', nm:'Nitrogen', m:14.007, t:'nonmetal', r:2, c:15, d:'Gas 78% atmosfer', u:'Pupuk, ammonia'},
+            {n:8, s:'O', nm:'Oksigen', m:15.999, t:'nonmetal', r:2, c:16, d:'Penting untuk respirasi', u:'Pembakaran, medis'},
+            {n:9, s:'F', nm:'Flour', m:18.998, t:'halogen', r:2, c:17, d:'Elemen paling reaktif', u:'Pasta gigi, pendingin'},
+            {n:10, s:'Ne', nm:'Neon', m:20.180, t:'noble', r:2, c:18, d:'Gas mulia bersinar', u:'Lampu neon, tanda'},
+            {n:11, s:'Na', nm:'Natrium', m:22.990, t:'metal', r:3, c:1, d:'Logam reaktif penting', u:'Garam meja, detergen'},
+            {n:12, s:'Mg', nm:'Magnesium', m:24.305, t:'metal', r:3, c:2, d:'Penting untuk otot', u:'Pesawat, mobil, baterai'},
+            {n:13, s:'Al', nm:'Aluminium', m:26.982, t:'metal', r:3, c:13, d:'Logam berlimpah 3', u:'Pesawat, kemasan, konstruksi'},
+            {n:14, s:'Si', nm:'Silikon', m:28.086, t:'semimetal', r:3, c:14, d:'Semi-logam elektronik', u:'Chip, panel surya'},
+            {n:15, s:'P', nm:'Fosfor', m:30.974, t:'nonmetal', r:3, c:15, d:'Elemen energi sel', u:'Pupuk, korek api'},
+            {n:16, s:'S', nm:'Belerang', m:32.065, t:'nonmetal', r:3, c:16, d:'Elemen mudah terbakar', u:'Asam sulfat, vulkanisasi'},
+            {n:17, s:'Cl', nm:'Klorin', m:35.453, t:'halogen', r:3, c:17, d:'Gas untuk desinfeksi', u:'Air bersih, plastik PVC'},
+            {n:18, s:'Ar', nm:'Argon', m:39.948, t:'noble', r:3, c:18, d:'Gas mulia tidak reaktif', u:'Pengelasan, isolasi'},
+            {n:19, s:'K', nm:'Kalium', m:39.098, t:'metal', r:4, c:1, d:'Logam reaktif', u:'Pupuk, bahan kimia'},
+            {n:20, s:'Ca', nm:'Kalsium', m:40.078, t:'metal', r:4, c:2, d:'Penting tulang gigi', u:'Konstruksi, semen'},
+            {n:21, s:'Sc', nm:'Skandium', m:44.956, t:'metal', r:4, c:3, d:'Logam transisi ringan', u:'Paduan aluminium'},
+            {n:22, s:'Ti', nm:'Titanium', m:47.867, t:'metal', r:4, c:4, d:'Logam sangat kuat', u:'Pesawat, protesa medis'},
+            {n:23, s:'V', nm:'Vanadium', m:50.942, t:'metal', r:4, c:5, d:'Logam untuk paduan', u:'Baja khusus, pigmen'},
+            {n:24, s:'Cr', nm:'Kromium', m:51.996, t:'metal', r:4, c:6, d:'Logam tahan korosi', u:'Stainless steel, plating'},
+            {n:25, s:'Mn', nm:'Mangan', m:54.938, t:'metal', r:4, c:7, d:'Logam untuk baja', u:'Baja, baterai, pupuk'},
+            {n:26, s:'Fe', nm:'Besi', m:55.845, t:'metal', r:4, c:8, d:'Logam paling penting', u:'Baja, konstruksi, otomotif'},
+            {n:27, s:'Co', nm:'Kobalt', m:58.933, t:'metal', r:4, c:9, d:'Logam untuk magnet', u:'Magnet permanen, baterai'},
+            {n:28, s:'Ni', nm:'Nikel', m:58.693, t:'metal', r:4, c:10, d:'Logam tahan korosi', u:'Stainless steel, koin'},
+            {n:29, s:'Cu', nm:'Tembaga', m:63.546, t:'metal', r:4, c:11, d:'Logam konduktif merah', u:'Kabel listrik, pipa air'},
+            {n:30, s:'Zn', nm:'Seng', m:65.380, t:'metal', r:4, c:12, d:'Logam penting imun', u:'Galvanisasi, baterai'},
+            {n:31, s:'Ga', nm:'Galium', m:69.723, t:'metal', r:4, c:13, d:'Logam titik leleh rendah', u:'Semikonduktor, LED'},
+            {n:32, s:'Ge', nm:'Germanium', m:72.640, t:'semimetal', r:4, c:14, d:'Semi-logam elektronik', u:'Transistor, serat optik'},
+            {n:33, s:'As', nm:'Arsen', m:74.922, t:'semimetal', r:4, c:15, d:'Semi-logam beracun', u:'Pestisida, semikonduktor'},
+            {n:34, s:'Se', nm:'Selenium', m:78.960, t:'nonmetal', r:4, c:16, d:'Non-logam elektronik', u:'Panel fotovoltaik, suplemen'},
+            {n:35, s:'Br', nm:'Bromin', m:79.904, t:'halogen', r:4, c:17, d:'Halogen cair merah', u:'Flame retardant, fotografi'},
+            {n:36, s:'Kr', nm:'Kripton', m:83.798, t:'noble', r:4, c:18, d:'Gas mulia tidak reaktif', u:'Lampu neon, isolasi'},
+            {n:37, s:'Rb', nm:'Rubidium', m:85.468, t:'metal', r:5, c:1, d:'Logam sangat lembut', u:'Fotsel, jam atom'},
+            {n:38, s:'Sr', nm:'Strontium', m:87.620, t:'metal', r:5, c:2, d:'Logam alkaline earth', u:'Kembang api merah, semen'},
+            {n:39, s:'Y', nm:'Itrium', m:88.906, t:'metal', r:5, c:3, d:'Logam transisi ringan', u:'LED, laser, superkonduktur'},
+            {n:40, s:'Zr', nm:'Zirkonium', m:91.224, t:'metal', r:5, c:4, d:'Logam tahan panas', u:'Reaktor nuklir, keramik'},
+            {n:41, s:'Nb', nm:'Niobium', m:92.906, t:'metal', r:5, c:5, d:'Logam tahan korosi', u:'Superkonduktur, paduan'},
+            {n:42, s:'Mo', nm:'Molibdenum', m:95.940, t:'metal', r:5, c:6, d:'Logam tahan panas', u:'Baja khusus, katalis'},
+            {n:43, s:'Tc', nm:'Teknisium', m:98, t:'metal', r:5, c:7, d:'Logam radioaktif sintetis', u:'Pencitraan medis'},
+            {n:44, s:'Ru', nm:'Ruthenium', m:101.07, t:'metal', r:5, c:8, d:'Logam platinum mulia', u:'Katalis, elektronik'},
+            {n:45, s:'Rh', nm:'Rodium', m:102.91, t:'metal', r:5, c:9, d:'Logam platinum langka', u:'Konverter katalis, layar'},
+            {n:46, s:'Pd', nm:'Paladium', m:106.42, t:'metal', r:5, c:10, d:'Logam platinum mulia', u:'Katalis, perhiasan'},
+            {n:47, s:'Ag', nm:'Perak', m:107.87, t:'metal', r:5, c:11, d:'Logam mulia konduktif', u:'Perhiasan, fotografi'},
+            {n:48, s:'Cd', nm:'Kadmium', m:112.41, t:'metal', r:5, c:12, d:'Logam beracun', u:'Baterai NiCd, pigmen'},
+            {n:49, s:'In', nm:'Indium', m:114.82, t:'metal', r:5, c:13, d:'Logam lunak langka', u:'Layar sentuh, semikonduktor'},
+            {n:50, s:'Sn', nm:'Timah', m:118.71, t:'metal', r:5, c:14, d:'Logam tahan korosi', u:'Perunggu, solder'},
+            {n:51, s:'Sb', nm:'Antimoni', m:121.76, t:'semimetal', r:5, c:15, d:'Semi-logam brittle', u:'Flame retardant, paduan'},
+            {n:52, s:'Te', nm:'Telur', m:127.60, t:'semimetal', r:5, c:16, d:'Semi-logam langka', u:'Solar cells, termoelektrik'},
+            {n:53, s:'I', nm:'Iodium', m:126.90, t:'halogen', r:5, c:17, d:'Halogen penting kesehatan', u:'Garam beriodium, medis'},
+            {n:54, s:'Xe', nm:'Xenon', m:131.29, t:'noble', r:5, c:18, d:'Gas mulia langka', u:'Lampu xenon, anestesi'},
+            {n:55, s:'Cs', nm:'Cesium', m:132.91, t:'metal', r:6, c:1, d:'Logam paling reaktif', u:'Jam atom, fotsel'},
+            {n:56, s:'Ba', nm:'Barium', m:137.33, t:'metal', r:6, c:2, d:'Logam alkaline earth', u:'Kontras X-ray, pigmen'},
+            {n:57, s:'La', nm:'Lantanum', m:138.91, t:'lanthanide', r:8, c:1, d:'Logam lantanida pertama', u:'Senter terang, katalis'},
+            {n:58, s:'Ce', nm:'Serium', m:140.12, t:'lanthanide', r:8, c:2, d:'Logam lantanida berlimpah', u:'Katalis, polishing'},
+            {n:59, s:'Pr', nm:'Praseodimium', m:140.91, t:'lanthanide', r:8, c:3, d:'Logam lantanida hijau', u:'Magnet permanen, laser'},
+            {n:60, s:'Nd', nm:'Neodimium', m:144.24, t:'lanthanide', r:8, c:4, d:'Logam lantanida kuat', u:'Magnet kuat, laser'},
+            {n:61, s:'Pm', nm:'Prometium', m:145, t:'lanthanide', r:8, c:5, d:'Logam lantanida radioaktif', u:'Sumber radiasi, jam'},
+            {n:62, s:'Sm', nm:'Samarium', m:150.36, t:'lanthanide', r:8, c:6, d:'Logam lantanida', u:'Magnet, laser'},
+            {n:63, s:'Eu', nm:'Europium', m:151.96, t:'lanthanide', r:8, c:7, d:'Logam lantanida merah', u:'Fosfor TV, uang kertas'},
+            {n:64, s:'Gd', nm:'Gadolinium', m:157.25, t:'lanthanide', r:8, c:8, d:'Logam lantanida paramagnetik', u:'MRI, absorber neutron'},
+            {n:65, s:'Tb', nm:'Terbium', m:158.93, t:'lanthanide', r:8, c:9, d:'Logam lantanida langka', u:'Fosfor hijau, laser'},
+            {n:66, s:'Dy', nm:'Disprosium', m:162.50, t:'lanthanide', r:8, c:10, d:'Logam lantanida magnetik', u:'Magnet hybrid, laser'},
+            {n:67, s:'Ho', nm:'Holmium', m:164.93, t:'lanthanide', r:8, c:11, d:'Logam lantanida', u:'Laser, magnet'},
+            {n:68, s:'Er', nm:'Erbium', m:167.26, t:'lanthanide', r:8, c:12, d:'Logam lantanida merah muda', u:'Serat optik, laser'},
+            {n:69, s:'Tm', nm:'Tulium', m:168.93, t:'lanthanide', r:8, c:13, d:'Logam lantanida langka', u:'X-ray portable, laser'},
+            {n:70, s:'Yb', nm:'Iterbium', m:173.04, t:'lanthanide', r:8, c:14, d:'Logam lantanida', u:'Jam atom, laser'},
+            {n:71, s:'Lu', nm:'Lutesium', m:174.97, t:'lanthanide', r:8, c:15, d:'Logam lantanida terakhir', u:'Katalis, PET scan'},
+            {n:72, s:'Hf', nm:'Hafnium', m:178.49, t:'metal', r:6, c:3, d:'Logam tahan panas', u:'Reaktor nuklir, perpipaan'},
+            {n:73, s:'Ta', nm:'Tantalum', m:180.95, t:'metal', r:6, c:4, d:'Logam tahan korosi', u:'Elektronik, implant medis'},
+            {n:74, s:'W', nm:'Wolfram', m:183.84, t:'metal', r:6, c:5, d:'Logam titik leleh tertinggi', u:'Filamen lampu, senjata'},
+            {n:75, s:'Re', nm:'Renium', m:186.21, t:'metal', r:6, c:6, d:'Logam platinum mulia', u:'Katalis, jet engine'},
+            {n:76, s:'Os', nm:'Osmium', m:190.23, t:'metal', r:6, c:7, d:'Logam paling padat', u:'Filamen lampu, katalis'},
+            {n:77, s:'Ir', nm:'Iridium', m:192.22, t:'metal', r:6, c:8, d:'Logam platinum tahan korosi', u:'Lilin busi, standar'},
+            {n:78, s:'Pt', nm:'Platinum', m:195.08, t:'metal', r:6, c:9, d:'Logam platinum paling mulia', u:'Perhiasan, katalis'},
+            {n:79, s:'Au', nm:'Emas', m:196.97, t:'metal', r:6, c:10, d:'Logam mulia paling berharga', u:'Perhiasan, elektronik'},
+            {n:80, s:'Hg', nm:'Merkuri', m:200.59, t:'metal', r:6, c:11, d:'Logam cair suhu ruangan', u:'Termometer, barometer'},
+            {n:81, s:'Tl', nm:'Talium', m:204.38, t:'metal', r:6, c:12, d:'Logam lunak beracun', u:'Detektor radiasi, fiber'},
+            {n:82, s:'Pb', nm:'Timbal', m:207.2, t:'metal', r:6, c:13, d:'Logam lunak mudah bentuk', u:'Baterai, pelindung radiasi'},
+            {n:83, s:'Bi', nm:'Bismuth', m:208.98, t:'metal', r:6, c:14, d:'Logam kristal indah', u:'Kosmetik, obat pencahar'},
+            {n:84, s:'Po', nm:'Polonium', m:209, t:'semimetal', r:6, c:15, d:'Semi-logam radioaktif', u:'Sumber alfa partikel'},
+            {n:85, s:'At', nm:'Astatin', m:210, t:'halogen', r:6, c:16, d:'Halogen radioaktif langka', u:'Penelitian medis'},
+            {n:86, s:'Rn', nm:'Radon', m:222, t:'noble', r:6, c:17, d:'Gas mulia radioaktif', u:'Terapi kesehatan'},
+            {n:87, s:'Fr', nm:'Francium', m:223, t:'metal', r:7, c:1, d:'Logam paling radioaktif', u:'Penelitian nuklir'},
+            {n:88, s:'Ra', nm:'Radium', m:226, t:'metal', r:7, c:2, d:'Logam radioaktif mulia', u:'Terapi kanker historis'},
+            {n:89, s:'Ac', nm:'Aktinium', m:227, t:'actinide', r:9, c:1, d:'Logam aktinida radioaktif', u:'Penelitian nuklir'},
+            {n:90, s:'Th', nm:'Torium', m:232.04, t:'actinide', r:9, c:2, d:'Logam aktinida radioaktif', u:'Bahan bakar nuklir'},
+            {n:91, s:'Pa', nm:'Protaktinium', m:231.04, t:'actinide', r:9, c:3, d:'Logam aktinida langka', u:'Penelitian'},
+            {n:92, s:'U', nm:'Uranium', m:238.03, t:'actinide', r:9, c:4, d:'Logam aktinida radioaktif', u:'Bahan bakar nuklir'},
+            {n:93, s:'Np', nm:'Neptunium', m:237.05, t:'actinide', r:9, c:5, d:'Logam aktinida sintetis', u:'Penelitian, detektor'},
+            {n:94, s:'Pu', nm:'Plutonium', m:244, t:'actinide', r:9, c:6, d:'Logam aktinida sintetis', u:'Bahan bakar nuklir'},
+            {n:95, s:'Am', nm:'Americium', m:243, t:'actinide', r:9, c:7, d:'Logam aktinida sintetis', u:'Detektor asap'},
+            {n:96, s:'Cm', nm:'Curium', m:247, t:'actinide', r:9, c:8, d:'Logam aktinida sintetis', u:'Sumber radiasi'},
+            {n:97, s:'Bk', nm:'Berkelium', m:247, t:'actinide', r:9, c:9, d:'Logam aktinida sintetis', u:'Penelitian'},
+            {n:98, s:'Cf', nm:'Californium', m:251, t:'actinide', r:9, c:10, d:'Logam aktinida sintetis', u:'Sumber neutron'},
+            {n:99, s:'Es', nm:'Einstenium', m:252, t:'actinide', r:9, c:11, d:'Logam aktinida sintetis', u:'Penelitian'},
+            {n:100, s:'Fm', nm:'Fermium', m:257, t:'actinide', r:9, c:12, d:'Logam aktinida sintetis', u:'Penelitian'},
+            {n:101, s:'Md', nm:'Mendellevium', m:258, t:'actinide', r:9, c:13, d:'Logam aktinida sintetis', u:'Penelitian'},
+            {n:102, s:'No', nm:'Nobelium', m:259, t:'actinide', r:9, c:14, d:'Logam aktinida sintetis', u:'Penelitian'},
+            {n:103, s:'Lr', nm:'Lawrencium', m:262, t:'actinide', r:9, c:15, d:'Logam aktinida sintetis', u:'Penelitian'},
+            {n:104, s:'Rf', nm:'Rutherfordium', m:261, t:'metal', r:7, c:3, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:105, s:'Db', nm:'Dubnium', m:262, t:'metal', r:7, c:4, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:106, s:'Sg', nm:'Seaborgium', m:263, t:'metal', r:7, c:5, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:107, s:'Bh', nm:'Bohrium', m:262, t:'metal', r:7, c:6, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:108, s:'Hs', nm:'Hassium', m:277, t:'metal', r:7, c:7, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:109, s:'Mt', nm:'Meitnerium', m:278, t:'metal', r:7, c:8, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:110, s:'Ds', nm:'Darmstadium', m:281, t:'metal', r:7, c:9, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:111, s:'Rg', nm:'Roentgenium', m:282, t:'metal', r:7, c:10, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:112, s:'Cn', nm:'Copernicium', m:285, t:'metal', r:7, c:11, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:113, s:'Nh', nm:'Nihonium', m:286, t:'metal', r:7, c:12, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:114, s:'Fl', nm:'Flerovium', m:289, t:'metal', r:7, c:13, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:115, s:'Mc', nm:'Moscovium', m:290, t:'metal', r:7, c:14, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:116, s:'Lv', nm:'Livermorium', m:293, t:'metal', r:7, c:15, d:'Elemen sintetis super berat', u:'Penelitian'},
+            {n:117, s:'Ts', nm:'Tennesine', m:294, t:'halogen', r:7, c:16, d:'Halogen sintetis super berat', u:'Penelitian'},
+            {n:118, s:'Og', nm:'Oganesson', m:294, t:'noble', r:7, c:17, d:'Gas mulia sintetis super berat', u:'Penelitian'}
+        ];
+
+        function initTable() {
+            const grid = document.getElementById('tableGrid');
+            // Row 1-7 untuk periode, plus row 8-9 untuk lantanida dan aktinida
+            for (let i = 1; i <= 9; i++) {
+                for (let j = 1; j <= 18; j++) {
+                    const div = document.createElement('div');
+                    div.style.gridColumn = j;
+                    div.style.gridRow = i;
+                    grid.appendChild(div);
+                }
+            }
+            
+            allElements.forEach(el => {
+                const idx = (el.r - 1) * 18 + (el.c - 1);
+                const cell = grid.children[idx];
+                if (cell) {
+                    cell.className = `element ${el.t}`;
+                    cell.innerHTML = `<div class="element-number">${el.n}</div><div class="element-symbol">${el.s}</div><div class="element-name">${el.nm}</div><div class="element-mass">${el.m}</div>`;
+                    cell.onclick = () => showElement(el);
+                }
+            });
+        }
+
+        function showElement(el) {
+            const typeMap = {'metal':'Logam','nonmetal':'Non-Logam','semimetal':'Semi-Logam','halogen':'Halogen','noble':'Gas Mulia','lanthanide':'Lantanida','actinide':'Aktinida'};
+            document.getElementById('modalElementName').textContent = el.nm + ' (' + el.s + ')';
+            document.getElementById('modalInfo').innerHTML = `
+                <div class="info-detail">
+                    <div class="detail-item"><div class="detail-label">Nomor Atom</div><div class="detail-value">${el.n}</div></div>
+                    <div class="detail-item"><div class="detail-label">Massa Atom</div><div class="detail-value">${el.m}</div></div>
+                    <div class="detail-item"><div class="detail-label">Jenis</div><div class="detail-value">${typeMap[el.t]}</div></div>
+                    <div class="detail-item"><div class="detail-label">Periode</div><div class="detail-value">${el.r}</div></div>
+                </div>
+                <div class="info-section"><h3>Deskripsi</h3><p>${el.d}</p></div>
+                <div class="info-section"><h3>Penggunaan</h3><p>${el.u}</p></div>
+            `;
+            document.getElementById('elementModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('elementModal').classList.remove('show');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onclick = e => {
+            const modal = document.getElementById('elementModal');
+            if (e.target === modal) modal.classList.remove('show');
+        }
+
+        initTable();
+    </script>
+</body>
+</html>
