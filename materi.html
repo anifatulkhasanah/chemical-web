@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi - ChemicalChanges</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a3a7a;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(26, 58, 122, 0.1);
+            margin-bottom: 30px;
+            border-bottom: 3px solid #1a3a7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1a3a7a;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            border: 2px solid #1a3a7a;
+            background: white;
+            color: #1a3a7a;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: #1a3a7a;
+            color: white;
+        }
+
+        .page-title {
+            background: linear-gradient(135deg, rgba(26, 58, 122, 0.05), rgba(26, 58, 122, 0.1));
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #1a3a7a;
+        }
+
+        .page-title h1 {
+            color: #1a3a7a;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            color: #1a3a7a;
+            font-size: 16px;
+        }
+
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(26, 58, 122, 0.1);
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #1a3a7a;
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1a3a7a;
+        }
+
+        .section h3 {
+            color: #1a3a7a;
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #1a3a7a;
+        }
+
+        .section p {
+            color: #1a3a7a;
+            font-size: 15px;
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.9;
+        }
+
+        .section ul {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            color: #1a3a7a;
+            font-size: 15px;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #1a3a7a;
+            margin: 20px 0;
+        }
+
+        .highlight-box strong {
+            color: #1a3a7a;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .page-title {
+                padding: 30px;
+            }
+
+            .page-title h1 {
+                font-size: 28px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .section h2 {
+                font-size: 24px;
+            }
+
+            .section h3 {
+                font-size: 18px;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Chemical Changes</div>
+            <button class="back-btn" onclick="goBack()">← Kembali</button>
+        </header>
+
+        <div class="page-title">
+            <h1>Materi: Materi dan Perubahannya</h1>
+            <p>Pelajari tentang sifat materi dan berbagai perubahan yang dialaminya</p>
+        </div>
+
+        <div class="content">
+            <!-- Bagian 1: Apa itu Materi -->
+            <div class="section">
+                <h2>1. Apa itu Materi?</h2>
+                <p>
+                    Materi adalah segala sesuatu yang menempati ruang dan memiliki massa. Segala sesuatu itu bisa sesuatu yang terlihat (zat cair dan zat padat) ataupun yang tidak tampak yaitu zat gas. Maksud materi menempati ruang adalah benda dapat ditempatkan dalam suatu ruang atau wadah tertentu sedangkan materi mempunyai massa, memiliki maksud bahwa benda yang termasuk materi dapat diukur, ditimbang dengan menggunakan alat ukur tertentu yaitu neraca atau timbangan.
+                </p>
+                <p>
+                    Benda-benda yang termasuk materi dalam kehidupan sehari-hari seperti, tumbuhan, hewan, manusia, kursi, meja dan banyak lainnya.
+                </p>
+            </div>
+
+            <!-- Bagian 2: Sifat Materi -->
+            <div class="section">
+                <h2>2. Sifat Materi</h2>
+                <p>
+                    Setiap materi memiliki sifat masing-masing yang menunjukan ciri dan karakteristik materi tersebut. Sifat materi terdiri dari sifat fisika dan sifat kimia.
+                </p>
+
+                <!-- Sifat Fisika -->
+                <h3>Sifat Fisika</h3>
+                <p>
+                    Sifat fisika merupakan sifat yang dapat diukur dan diteliti tanpa mengubah komposisi atau susunan dari zat tersebut. Sifat ini dapat diamati tanpa mengubah zat-zat penyusun materi tersebut. Sifat fisika antara lain, sebagai berikut:
+                </p>
+                <ul>
+                    <li>Wujud zat</li>
+                    <li>Warna</li>
+                    <li>Bau</li>
+                    <li>Titik leleh</li>
+                    <li>Titik didih</li>
+                    <li>Massa jenis</li>
+                    <li>Kekerasan</li>
+                    <li>Kelarutan</li>
+                    <li>Kekeruhan</li>
+                    <li>Kemagnetan</li>
+                    <li>Kekentalan</li>
+                </ul>
+
+                <!-- Sifat Kimia -->
+                <h3>Sifat Kimia</h3>
+                <p>
+                    Sifat kimia menyangkut perubahan materi menjadi materi lain. Sifat kimia zat merupakan perubahan suatu zat dan terjadi reaksi kimia sehingga terbentuk zat baru melalui beberapa proses, seperti:
+                </p>
+                <ul>
+                    <li>Pembakaran</li>
+                    <li>Pereaksian</li>
+                </ul>
+            </div>
+
+            <!-- Bagian 3: Perubahan Materi -->
+            <div class="section">
+                <h2>3. Perubahan Materi</h2>
+                <p>
+                    Perubahan materi dapat kita amati secara langsung, baik yang sengaja maupun yang terjadi secara alami. Perubahan materi tersebut ada yang menghasilkan materi baru, akan tetapi banyak juga yang hanya merupakan perubahan bentuk atau perubahan wujud.
+                </p>
+                <p>
+                    Perubahan materi terdiri dari dua macam perubahan, yaitu perubahan fisika dan perubahan kimia.
+                </p>
+
+                <!-- Perubahan Fisika -->
+                <h3>Perubahan Fisika</h3>
+                <p>
+                    Perubahan fisika merupakan perubahan yang tidak menghasilkan materi baru. Berikut ini adalah contoh dari perubahan fisika:
+                </p>
+                <ul>
+                    <li>Kayu dibentuk menjadi kursi, meja, lemari, dan sebagainya</li>
+                    <li>Besi baja dibentuk menjadi kerangka jembatan, teralis, pisau, dan lainnya</li>
+                    <li>Kapur barus yang menyublim</li>
+                    <li>Melarutnya gula atau garam dalam air</li>
+                    <li>Es mencair</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Catatan:</strong> Perubahan fisika hanya mengubah bentuk atau wujud, tetapi tidak menghasilkan zat baru. Komposisi zat tetap sama.
+                </div>
+
+                <!-- Perubahan Kimia -->
+                <h3>Perubahan Kimia</h3>
+                <p>
+                    Perubahan kimia adalah perubahan yang menimbulkan zat baru. Misalkan perkaratan atau kertas terbakar. Perubahan kimia biasa disebut reaksi kimia. Reaksi kimia terjadi ketika zat-zat pereaksi dicampurkan dalam suatu wadah. Akan tetapi tidak semua pencampuran disertai dengan reaksi kimia.
+                </p>
+                <p>
+                    Pada umumnya reaksi kimia disertai dengan suatu perubahan yang dapat diamati. Berikut ini beberapa perubahan yang menyertai reaksi kimia adalah:
+                </p>
+                <ul>
+                    <li>Perubahan suhu</li>
+                    <li>Terbentuk endapan</li>
+                    <li>Pembentukan gas</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Catatan:</strong> Perubahan kimia menghasilkan zat baru dengan sifat yang berbeda dari zat awal. Ini adalah reaksi kimia yang mengubah struktur dan komposisi materi.
+                </div>
+            </div>
+
+            <!-- Bagian 4: Klasifikasi Materi -->
+            <div class="section">
+                <h2>4. Klasifikasi Materi</h2>
+                <p>
+                    Ilmuwan menggolongkan materi berdasarkan komposisi dan sifatnya. Berdasarkan komposisinya, materi yang ada di alam dapat diklasifikasi menjadi zat tunggal dan campuran.
+                </p>
+
+                <!-- Unsur -->
+                <h3>Unsur</h3>
+                <p>
+                    Unsur merupakan zat tunggal yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana dengan proses kimia biasa. Unsur di alam dapat dibagi menjadi dua jenis, yaitu unsur logam dan non-logam. Contoh unsur logam adalah besi, emas, dan seng. Contoh unsur nonlogam adalah karbon, nitrogen, dan oksigen. Selain itu masih ada juga unsur yang bersifat semi logam.
+                </p>
+
+                <!-- Senyawa -->
+                <h3>Senyawa</h3>
+                <p>
+                    Senyawa terdiri atas dua buah unsur atau lebih. Senyawa merupakan zat tunggal/murni yang dapat diuraikan menjadi dua atau lebih zat yang lebih sederhana dengan proses kimia biasa. Senyawa terbentuk melalui proses pencampuran unsur secara kimia. Sifat suatu senyawa akan berbeda dengan sifat unsur-unsur penyusunnya.
+                </p>
+
+                <!-- Campuran -->
+                <h3>Campuran</h3>
+                <p>
+                    Campuran adalah suatu materi yang terdiri atas dua zat atau lebih yang masih mempunyai sifat zat asalnya. Campuran dibedakan menjadi dua, yaitu campuran homogen dan campuran heterogen.
+                </p>
+
+                <h4 style="color: #1a3a7a; margin-top: 20px; margin-bottom: 10px; font-size: 18px;">Campuran Homogen</h4>
+                <p>
+                    Campuran homogen adalah campuran yang tidak dapat dibedakan zat-zat yang tercampur di dalamnya. Misalnya larutan gula, larutan garam, dan sirup. Larutan tersusun atas pelarut (solvent) dan zat terlarut (solute). Pelarut yang banyak digunakan adalah air. Senyawa lain yang dapat digunakan sebagai pelarut adalah senyawa organik yang dikenal juga sebagai pelarut organik, contohnya kloroform dan alkohol.
+                </p>
+
+                <h4 style="color: #1a3a7a; margin-top: 20px; margin-bottom: 10px; font-size: 18px;">Campuran Heterogen</h4>
+                <p>
+                    Campuran pasir dan air merupakan salah satu contoh dari campuran heterogen. Campuran heterogen terjadi karena zat yang tidak dapat bercampur satu dengan lain secara sempurna sehingga dapat dikenali zat penyusunnya. Dengan demikian, pada campuran heterogen, seluruh bagiannya tidak memiliki komposisi yang sama.
+                </p>
+            </div>
+
+            <!-- Bagian 5: Tabel Perbandingan -->
+            <div class="section">
+                <h2>5. Perbedaan Unsur, Senyawa, dan Campuran</h2>
+                <p>Berikut ini adalah tabel perbandingan antara unsur, senyawa, dan campuran:</p>
+                <table style="width: 100%; border-collapse: collapse; margin: 20px 0; text-align: left;">
+                    <thead>
+                        <tr style="background: #f0f4ff; border: 1px solid #1a3a7a;">
+                            <th style="padding: 15px; border: 1px solid #1a3a7a; color: #1a3a7a; font-weight: bold;">Aspek</th>
+                            <th style="padding: 15px; border: 1px solid #1a3a7a; color: #1a3a7a; font-weight: bold;">Unsur</th>
+                            <th style="padding: 15px; border: 1px solid #1a3a7a; color: #1a3a7a; font-weight: bold;">Senyawa</th>
+                            <th style="padding: 15px; border: 1px solid #1a3a7a; color: #1a3a7a; font-weight: bold;">Campuran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border: 1px solid #1a3a7a;">
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Jenis Zat</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Zat tunggal</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Zat tunggal</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Campuran</td>
+                        </tr>
+                        <tr style="border: 1px solid #1a3a7a; background: #f9fbff;">
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Dapat Diuraikan</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Tidak dapat diuraikan</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Dapat diuraikan</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Dapat diuraikan</td>
+                        </tr>
+                        <tr style="border: 1px solid #1a3a7a;">
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Komposisi</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Satu jenis atom</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Dua jenis atom atau lebih</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Dua jenis atom atau lebih</td>
+                        </tr>
+                        <tr style="border: 1px solid #1a3a7a; background: #f9fbff;">
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Perbandingan Massa</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Tetap</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Tetap</td>
+                            <td style="padding: 12px; border: 1px solid #1a3a7a;">Tidak tetap</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Bagian 6: Teknik Pemisahan Campuran -->
+            <div class="section">
+                <h2>6. Teknik Sederhana Pemisahan Campuran</h2>
+                <p>
+                    Seperti yang sudah kita pelajari bahwa campuran terdiri atas dua zat atau lebih. Untuk memperoleh zat murni, penyusun campuran tersebut harus dipisahkan. Zat-zat dalam campuran tersebut dapat dipisahkan secara fisika. Prinsip pemisahan campuran didasarkan pada perbedaan sifat-sifat fisis zat penyusunnya, seperti wujud zat, ukuran partikel, titik leleh, titik didih, sifat magnetik, kelarutan, dan lain sebagainya.
+                </p>
+                <p>
+                    Metode pemisahan campuran banyak digunakan dalam kehidupan sehari-hari seperti untuk penjernihan air dan pembuatan garam. Berikut ini beberapa metode pemisahan campuran yang sering digunakan.
+                </p>
+
+                <h3>Filtrasi (Penyaringan)</h3>
+                <p>
+                    Penyaringan adalah metode pemisahan campuran yang digunakan untuk memisahkan cairan dan padatan yang tidak larut berdasarkan pada perbedaan ukuran partikel zat-zat yang bercampur.
+                </p>
+
+                <h3>Sentrifugasi</h3>
+                <p>
+                    Metode jenis ini sering dilakukan sebagai pengganti filtrasi jika partikel padatan yang terdapat dalam campuran memiliki ukuran sangat halus dan jumlah campurannya lebih sedikit. Metode sentrifugasi digunakan secara luas untuk memisahkan sel-sel darah merah dan sel-sel darah putih dari plasma darah. Dalam hal ini, padatan adalah sel-sel darah merah dan sel-sel darah putih yang akan mengumpul di dasar tabung reaksi, sedangkan plasma darah berupa cairan yang berada di bagian atas.
+                </p>
+
+                <h3>Distilasi (Penyulingan)</h3>
+                <p>
+                    Pemisahan campuran dengan cara distilasi (penyulingan) banyak digunakan dalam kehidupan sehari-hari maupun dalam kegiatan industri. Pemisahan campuran dengan cara penyulingan digunakan untuk memisahkan suatu zat cair dari campurannya. Prinsip kerjanya didasarkan pada perbedaan titik didih dari zat cair yang bercampur, sehingga saat menguap setiap zat akan terpisah.
+                </p>
+
+                <h3>Kromatografi</h3>
+                <p>
+                    Kromatografi merupakan metode pemisahan campuran yang didasarkan pada perbedaan kecepatan merambat antara partikel-partikel yang bercampur dalam suatu medium diam ketika dialiri suatu medium gerak. Pemisahan campuran dengan cara kromatografi pada umumnya digunakan untuk mengidentifikasi suatu zat yang berada dalam suatu campuran.
+                </p>
+                <p>
+                    Prinsip kerjanya didasarkan pada perbedaan kecepatan merambat antara partikel-partikel zat yang bercampur dalam suatu medium diam ketika dialiri suatu medium gerak. Contoh penggunaan kromatografi adalah untuk mengidentifikasi kandungan zat tertentu dalam suatu bahan makanan, mengidentifikasi hasil pertanian yang tercemar oleh pestisida, dan masih banyak lagi penggunaan pemisahan campuran dalam kehidupan sehari-hari. Jenis kromatografi yang paling banyak digunakan adalah kromatografi kertas. Jenis kromatografi lain adalah kromatografi lapis tipis dan kromatografi gas.
+                </p>
+
+                <h3>Sublimasi</h3>
+                <p>
+                    Prinsip kerja metode pemisahan campuran dengan cara sublimasi didasarkan pada campuran zat yang memiliki satu zat yang dapat menyublim (perubahan wujud padat ke wujud gas) sedangkan zat yang lainnya tidak dapat menyublim. Contohnya, campuran iodin dengan garam dapat dipisahkan dengan cara sublimasi.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
