@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktikum Virtual - ChemicalChanges</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: 'Segoe UI', sans-serif; background: #fff; color: #1a3a7a; padding: 20px;}
+        .container {max-width: 1200px; margin: 0 auto;}
+        header {background: #fff; padding: 20px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); margin-bottom: 30px; border-bottom: 3px solid #1a3a7a; display: flex; justify-content: space-between; align-items: center;}
+        .logo {font-size: 32px; font-weight: 900; color: #1a3a7a;}
+        .back-btn {padding: 10px 20px; border: 2px solid #1a3a7a; background: #fff; color: #1a3a7a; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;}
+        .back-btn:hover {background: #1a3a7a; color: #fff;}
+        .page-title {background: linear-gradient(135deg, rgba(26,58,122,0.05), rgba(26,58,122,0.1)); padding: 40px; border-radius: 15px; margin-bottom: 40px; border-left: 5px solid #1a3a7a;}
+        .page-title h1 {color: #1a3a7a; font-size: 36px; margin-bottom: 10px;}
+        .page-title p {color: #1a3a7a; font-size: 16px;}
+        .praktikum-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px;}
+        .praktikum-card {background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); overflow: hidden; transition: all 0.3s; cursor: pointer; border-top: 5px solid #1a3a7a;}
+        .praktikum-card:hover {transform: translateY(-8px); box-shadow: 0 10px 30px rgba(26,58,122,0.2);}
+        .praktikum-header {background: linear-gradient(135deg, #1a3a7a, #2e5fa3); padding: 25px; color: #fff;}
+        .praktikum-icon {font-size: 48px; margin-bottom: 10px;}
+        .praktikum-title {font-size: 22px; font-weight: 600; margin-bottom: 8px;}
+        .praktikum-type {font-size: 13px; opacity: 0.9; display: inline-block; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px;}
+        .praktikum-content {padding: 25px;}
+        .praktikum-description {color: #1a3a7a; font-size: 15px; line-height: 1.7; margin-bottom: 20px; text-align: justify;}
+        .alat-button {display: inline-block; background: #1a3a7a; color: #fff; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; margin-top: 10px; transition: all 0.3s;}
+        .alat-button:hover {background: #0f2347; transform: scale(1.05);}
+        .modal {display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); overflow-y: auto;}
+        .modal.show {display: block;}
+        .modal-content {background: #fff; margin: 3% auto; padding: 40px; border-radius: 15px; max-width: 1000px; border-left: 5px solid #1a3a7a;}
+        .modal-header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #f0f4ff;}
+        .modal-header h2 {color: #1a3a7a; font-size: 28px;}
+        .close-btn {background: 0; border: 0; font-size: 28px; cursor: pointer; color: #1a3a7a;}
+        .close-btn:hover {transform: rotate(90deg); transition: all 0.3s;}
+        .praktikum-workspace {display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-bottom: 30px;}
+        .workspace-area {background: #f0f4ff; padding: 30px; border-radius: 15px; border: 2px dashed #1a3a7a; min-height: 400px; position: relative;}
+        .workspace-title {color: #1a3a7a; font-weight: 600; margin-bottom: 20px; font-size: 16px;}
+        .drop-zone {background: #fff; border: 2px dashed #90caf9; border-radius: 12px; padding: 20px; min-height: 300px; display: flex; align-items: center; justify-content: center; color: #90caf9; font-weight: 600; transition: all 0.3s;}
+        .drop-zone.active {background: #e3f2fd; border-color: #1a3a7a; color: #1a3a7a;}
+        .materials-panel {background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1);}
+        .materials-title {color: #1a3a7a; font-weight: 600; margin-bottom: 20px; font-size: 16px;}
+        .material-item {background: #f0f4ff; padding: 15px; border-radius: 10px; margin-bottom: 10px; cursor: move; user-select: none; border: 2px solid #1a3a7a; transition: all 0.3s; font-weight: 600; color: #1a3a7a; text-align: center; font-size: 32px;}
+        .material-item:hover {background: #1a3a7a; color: #fff; transform: scale(1.1);}
+        .material-item.dragging {opacity: 0.5;}
+        .dropped-items {display: flex; flex-wrap: wrap; gap: 15px; min-height: 60px; padding: 10px;}
+        .dropped-item {background: #fff; border: 2px solid #1a3a7a; padding: 12px 15px; border-radius: 8px; display: flex; align-items: center; gap: 10px; color: #1a3a7a; font-weight: 600; font-size: 28px;}
+        .remove-item {cursor: pointer; color: #d32f2f; font-weight: bold; font-size: 18px;}
+        .result-section {background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 25px; margin-top: 30px; display: none;}
+        .result-section.show {display: block;}
+        .result-title {color: #2e7d32; font-weight: 600; font-size: 18px; margin-bottom: 12px;}
+        .result-text {color: #1a3a7a; font-size: 15px; line-height: 1.8; text-align: justify;}
+        @keyframes flame {0%, 100% {transform: scale(1);} 50% {transform: scale(1.1);}}
+        @keyframes bubble {0%, 100% {opacity: 0;} 50% {opacity: 1;}}
+        .animation-container {background: #fff; padding: 20px; border-radius: 10px; border: 2px dashed #1a3a7a; margin-bottom: 20px; min-height: 150px; display: flex; align-items: center; justify-content: center;}
+        @media (max-width: 768px) {
+            .praktikum-workspace {grid-template-columns: 1fr;}
+            header {flex-direction: column; gap: 15px;}
+            .logo {font-size: 24px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Chemical Changes</div>
+            <button class="back-btn" onclick="goBack()">← Kembali</button>
+        </header>
+
+        <div class="page-title">
+            <h1>Praktikum Virtual Interaktif</h1>
+            <p>Drag dan drop bahan untuk melakukan eksperimen! Lihat apa yang terjadi</p>
+        </div>
+
+        <div class="praktikum-grid" id="praktikumGrid"></div>
+    </div>
+
+    <div class="modal" id="praktikumModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const praktikums = [
+            {
+                id: 1,
+                icon: '❄️',
+                title: 'Es Mencair',
+                type: 'Perubahan Fisika',
+                description: 'Drag es ke pemanas untuk melihat es mencair menjadi air.',
+                materials: [
+                    {name: 'Es Batu', emoji: '🧊'},
+                    {name: 'Pemanas', emoji: '🔥'}
+                ],
+                animation: '<div style="text-align: center; font-size: 48px; margin: 20px 0;">🧊 → 💧</div><div style="text-align: center; color: #1a3a7a; font-weight: 600;">Es mencair menjadi air!</div>',
+                result: '✓ Es mencair menjadi air! Ini adalah perubahan fisika karena hanya mengubah wujud zat (padat → cair) tanpa mengubah komposisi kimianya. Air yang terbentuk tetap H₂O.'
+            },
+            {
+                id: 2,
+                icon: '💧',
+                title: 'Penguapan Air',
+                type: 'Perubahan Fisika',
+                description: 'Drag air ke pemanas untuk melihat air menguap menjadi uap.',
+                materials: [
+                    {name: 'Air', emoji: '💧'},
+                    {name: 'Pemanas', emoji: '🔥'}
+                ],
+                animation: '<div style="text-align: center; font-size: 48px; margin: 20px 0;">💧 → 💨</div><div style="text-align: center; color: #1a3a7a; font-weight: 600;">Air menguap menjadi uap!</div>',
+                result: '✓ Air menguap menjadi uap! Ini adalah perubahan fisika karena komposisi tetap H₂O, hanya berubah wujud dari cair menjadi gas. Tidak ada zat baru yang terbentuk.'
+            },
+            {
+                id: 3,
+                icon: '🔥',
+                title: 'Pembakaran Lilin',
+                type: 'Perubahan Kimia',
+                description: 'Drag lilin ke korek api untuk melihat lilin terbakar.',
+                materials: [
+                    {name: 'Lilin', emoji: '🕯️'},
+                    {name: 'Korek Api', emoji: '🔥'}
+                ],
+                animation: '<div style="text-align: center; font-size: 48px; margin: 20px 0; animation: flame 0.5s infinite;">🕯️ 🔥</div><div style="text-align: center; color: #1a3a7a; font-weight: 600;">Lilin terbakar menghasilkan api, asap, dan jelaga!</div><div style="text-align: center; font-size: 32px; margin-top: 20px;">💨 💨 💨</div>',
+                result: '🔥 Lilin terbakar! Ini adalah perubahan kimia karena menghasilkan zat-zat baru: CO₂ (gas), H₂O (uap), dan jelaga (karbon padat). Pembakaran adalah reaksi dengan oksigen yang menghasilkan zat baru.'
+            },
+            {
+                id: 4,
+                icon: '🧂',
+                title: 'Kelarutan Garam',
+                type: 'Perubahan Fisika',
+                description: 'Drag garam ke air panas untuk melihat kelarutan garam.',
+                materials: [
+                    {name: 'Garam', emoji: '🧂'},
+                    {name: 'Air Panas', emoji: '♨️'}
+                ],
+                animation: '<div style="text-align: center; font-size: 48px; margin: 20px 0;">🧂 → ♨️</div><div style="text-align: center; color: #1a3a7a; font-weight: 600;">Garam larut dalam air panas!</div>',
+                result: '✓ Garam larut dalam air panas! Ini adalah perubahan fisika karena garam tetap NaCl, hanya berubah posisinya dalam larutan. Tidak ada zat baru yang terbentuk, hanya perubahan keadaan.'
+            }
+        ];
+
+        let currentPraktikum = null;
+        let droppedItems = [];
+
+        function renderPraktikums() {
+            const grid = document.getElementById('praktikumGrid');
+            praktikums.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'praktikum-card';
+                card.innerHTML = `
+                    <div class="praktikum-header">
+                        <div class="praktikum-icon">${p.icon}</div>
+                        <div class="praktikum-title">${p.title}</div>
+                        <span class="praktikum-type">${p.type}</span>
+                    </div>
+                    <div class="praktikum-content">
+                        <p class="praktikum-description">${p.description}</p>
+                        <button class="alat-button" onclick="openPraktikum(${p.id})">Mulai Eksperimen →</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openPraktikum(id) {
+            currentPraktikum = praktikums.find(p => p.id === id);
+            droppedItems = [];
+            
+            document.getElementById('modalTitle').textContent = currentPraktikum.title;
+            
+            let materialsHTML = '';
+            currentPraktikum.materials.forEach(mat => {
+                materialsHTML += `<div class="material-item" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)" data-name="${mat.name}">${mat.emoji}</div>`;
+            });
+            
+            const html = `
+                <div class="praktikum-workspace">
+                    <div class="workspace-area">
+                        <div class="workspace-title">Area Eksperimen - Drag bahan ke sini</div>
+                        <div class="drop-zone" id="dropZone" ondrop="dropItem(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)">
+                            <div>Drag bahan ke sini untuk memulai eksperimen</div>
+                        </div>
+                        <div class="dropped-items" id="droppedItems"></div>
+                        <div class="result-section" id="resultSection">
+                            <div class="result-title">Hasil Eksperimen:</div>
+                            <div class="result-text" id="resultText"></div>
+                        </div>
+                    </div>
+                    <div class="materials-panel">
+                        <div class="materials-title">Bahan-Bahan</div>
+                        ${materialsHTML}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('praktikumModal').classList.add('show');
+        }
+
+        function dragStart(e) {
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'copy';
+            e.dataTransfer.setData('emoji', e.target.textContent);
+            e.dataTransfer.setData('name', e.target.getAttribute('data-name'));
+        }
+
+        function dragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+            document.getElementById('dropZone').classList.add('active');
+        }
+
+        function dragLeave(e) {
+            document.getElementById('dropZone').classList.remove('active');
+        }
+
+        function dropItem(e) {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.remove('active');
+            
+            const emoji = e.dataTransfer.getData('emoji');
+            const name = e.dataTransfer.getData('name');
+            
+            droppedItems.push({emoji, name});
+            
+            const droppedItemsDiv = document.getElementById('droppedItems');
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'dropped-item';
+            itemDiv.innerHTML = `${emoji} <span class="remove-item" onclick="removeItem(${droppedItems.length - 1})">✕</span>`;
+            droppedItemsDiv.appendChild(itemDiv);
+            
+            // Cek apakah semua bahan sudah dikumpulkan
+            if (droppedItems.length === currentPraktikum.materials.length) {
+                const resultSection = document.getElementById('resultSection');
+                resultSection.innerHTML = `
+                    <div class="animation-container">
+                        ${currentPraktikum.animation}
+                    </div>
+                    <div class="result-title">Penjelasan Ilmiah:</div>
+                    <div class="result-text">${currentPraktikum.result}</div>
+                `;
+                resultSection.classList.add('show');
+            }
+        }
+
+        function removeItem(index) {
+            droppedItems.splice(index, 1);
+            const droppedItemsDiv = document.getElementById('droppedItems');
+            droppedItemsDiv.innerHTML = '';
+            droppedItems.forEach((item, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'dropped-item';
+                itemDiv.innerHTML = `${item.emoji} <span class="remove-item" onclick="removeItem(${idx})">✕</span>`;
+                droppedItemsDiv.appendChild(itemDiv);
+            });
+            document.getElementById('resultSection').classList.remove('show');
+            document.getElementById('resultSection').innerHTML = '';
+        }
+
+        function closeModal() {
+            document.getElementById('praktikumModal').classList.remove('show');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onclick = e => {
+            const modal = document.getElementById('praktikumModal');
+            if (e.target === modal) modal.classList.remove('show');
+        }
+
+        renderPraktikums();
+    </script>
+</body>
+</html>
