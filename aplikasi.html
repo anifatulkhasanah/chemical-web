@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Sehari-hari - ChemicalChanges</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: 'Segoe UI', sans-serif; background: #fff; color: #1a3a7a; padding: 20px;}
+        .container {max-width: 1200px; margin: 0 auto;}
+        header {background: #fff; padding: 20px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); margin-bottom: 30px; border-bottom: 3px solid #1a3a7a; display: flex; justify-content: space-between; align-items: center;}
+        .logo {font-size: 32px; font-weight: 900; color: #1a3a7a;}
+        .back-btn {padding: 10px 20px; border: 2px solid #1a3a7a; background: #fff; color: #1a3a7a; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;}
+        .back-btn:hover {background: #1a3a7a; color: #fff;}
+        .page-title {background: linear-gradient(135deg, rgba(26,58,122,0.05), rgba(26,58,122,0.1)); padding: 40px; border-radius: 15px; margin-bottom: 40px; border-left: 5px solid #1a3a7a;}
+        .page-title h1 {color: #1a3a7a; font-size: 36px; margin-bottom: 10px;}
+        .page-title p {color: #1a3a7a; font-size: 16px;}
+        .apps-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px;}
+        .app-card {background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(26,58,122,0.1); overflow: hidden; transition: all 0.3s; cursor: pointer; border-left: 5px solid #1a3a7a;}
+        .app-card:hover {transform: translateY(-8px); box-shadow: 0 10px 30px rgba(26,58,122,0.2);}
+        .app-header {background: linear-gradient(135deg, #1a3a7a, #2e5fa3); padding: 25px; color: #fff;}
+        .app-icon {font-size: 48px; margin-bottom: 10px;}
+        .app-title {font-size: 22px; font-weight: 600; margin-bottom: 5px;}
+        .app-category {font-size: 13px; opacity: 0.9;}
+        .app-content {padding: 25px;}
+        .app-description {color: #1a3a7a; font-size: 15px; line-height: 1.7; margin-bottom: 20px; text-align: justify;}
+        .app-points {list-style: none; margin-bottom: 15px;}
+        .app-points li {color: #1a3a7a; font-size: 14px; padding: 8px 0; padding-left: 25px; position: relative; line-height: 1.6;}
+        .app-points li:before {content: '✓'; position: absolute; left: 0; color: #1a3a7a; font-weight: bold;}
+        .app-type {display: inline-block; background: #f0f4ff; color: #1a3a7a; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 15px;}
+        .physical {border-left-color: #4caf50;}
+        .chemical {border-left-color: #ff9999;}
+        .both {border-left-color: #ff6b6b;}
+        .detail-modal {display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); overflow-y: auto;}
+        .detail-modal.show {display: block;}
+        .modal-content {background: #fff; margin: 5% auto; padding: 40px; border-radius: 15px; max-width: 700px; border-left: 5px solid #1a3a7a;}
+        .modal-header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f4ff;}
+        .modal-header h2 {color: #1a3a7a; font-size: 28px;}
+        .close-btn {background: 0; border: 0; font-size: 28px; cursor: pointer; color: #1a3a7a;}
+        .close-btn:hover {transform: rotate(90deg); transition: all 0.3s;}
+        .section {margin-bottom: 25px;}
+        .section h3 {color: #1a3a7a; font-size: 18px; margin-bottom: 12px; border-bottom: 2px solid #f0f4ff; padding-bottom: 8px;}
+        .section p {color: #1a3a7a; font-size: 15px; line-height: 1.8; text-align: justify;}
+        @media (max-width: 768px) {
+            header {flex-direction: column; gap: 15px;}
+            .logo {font-size: 24px;}
+            .apps-grid {grid-template-columns: 1fr;}
+            .back-btn {width: 100%;}
+            .modal-content {margin: 20px; padding: 20px;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Chemical Changes</div>
+            <button class="back-btn" onclick="goBack()">← Kembali</button>
+        </header>
+
+        <div class="page-title">
+            <h1>Aplikasi Kimia dalam Kehidupan Sehari-hari</h1>
+            <p>Temukan bagaimana konsep materi dan perubahan kimia diterapkan dalam kehidupan kita</p>
+        </div>
+
+        <div class="apps-grid" id="appGrid"></div>
+    </div>
+
+    <div class="detail-modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalDetail"></div>
+        </div>
+    </div>
+
+    <script>
+        const applications = [
+            {
+                id: 1,
+                icon: '🔥',
+                title: 'Pembakaran Kayu',
+                category: 'Energi & Panas',
+                type: 'chemical',
+                description: 'Pembakaran kayu mengubah kayu menjadi abu dan gas karbon dioksida.',
+                points: ['Perubahan wujud dari padat menjadi gas', 'Menghasilkan energi panas dan cahaya', 'Terbentuk zat baru (abu dan CO₂)'],
+                detail: 'Ketika kayu dibakar, terjadi reaksi kimia antara karbon dalam kayu dengan oksigen di udara. Reaksi ini menghasilkan energi panas dan cahaya, serta mengubah kayu menjadi abu (karbon padat) dan gas karbon dioksida. Ini adalah contoh perubahan kimia karena terbentuk zat baru yang memiliki sifat berbeda dari kayu awal.'
+            },
+            {
+                id: 2,
+                icon: '🧂',
+                title: 'Pembuatan Garam Dapur',
+                category: 'Industri & Makanan',
+                type: 'physical',
+                description: 'Garam didapat melalui penguapan air laut yang mengandung garam terlarut.',
+                points: ['Memanfaatkan penguapan air laut', 'Garam mengkristal setelah air menguap', 'Perubahan wujud cairan menjadi padatan'],
+                detail: 'Air laut yang asin dievaporasi dengan panas matahari. Ketika air menguap sebagai gas uap air, garam yang terlarut di dalamnya tetap tertinggal. Garam kemudian mengkristal menjadi kristal padatan. Ini adalah contoh perubahan fisika karena hanya terjadi perubahan wujud tanpa membentuk zat baru.'
+            },
+            {
+                id: 3,
+                icon: '🧊',
+                title: 'Pencairan Es Krim',
+                category: 'Makanan & Minuman',
+                type: 'physical',
+                description: 'Es krim mencair ketika suhu naik dari bawah titik lelehnya.',
+                points: ['Perubahan wujud dari padat menjadi cairan', 'Terjadi karena peningkatan suhu', 'Komposisi kimia tetap sama'],
+                detail: 'Es krim adalah campuran padat yang terdiri dari lemak, protein, air, dan gula. Ketika suhu lingkungan naik di atas titik lelehnya (biasanya 0°C), es krim berubah menjadi cairan. Perubahan ini hanya mengubah wujud fisik tanpa mengubah komposisi kimia es krim, sehingga termasuk perubahan fisika.'
+            },
+            {
+                id: 4,
+                icon: '🍎',
+                title: 'Pengkaratan Besi',
+                category: 'Material & Korosi',
+                type: 'chemical',
+                description: 'Besi bereaksi dengan oksigen dan air membentuk karat besi.',
+                points: ['Bereaksi dengan oksigen dan uap air', 'Membentuk zat baru (oksida besi)', 'Mengubah warna dan sifat material'],
+                detail: 'Besi yang terpapar oksigen dan kelembaban akan mengalami oksidasi. Reaksi kimia antara besi (Fe), oksigen (O₂), dan air (H₂O) menghasilkan oksida besi yang disebut karat. Karat memiliki warna coklat-merah dan sifat berbeda dari besi murni. Ini adalah perubahan kimia karena terbentuk zat baru.'
+            },
+            {
+                id: 5,
+                icon: '🧼',
+                title: 'Pencucian Pakaian',
+                category: 'Kebersihan & Rumah Tangga',
+                type: 'both',
+                description: 'Detergen memecah noda melalui reaksi kimia dengan air.',
+                points: ['Detergen mengubah sifat permukaan air', 'Noda larut dalam air berkat detergen', 'Gabungan perubahan fisika dan kimia'],
+                detail: 'Detergen adalah surfaktan yang mengurangi tegangan permukaan air, memungkinkannya untuk menembus serat kain. Ketika dicampur dengan air panas, detergen bereaksi dengan noda lemak, membuatnya larut dalam air. Kombinasi dari perubahan fisika (penetrasi dan pencampuran) dan kimia (reaksi dengan noda) membuat pakaian bersih.'
+            },
+            {
+                id: 6,
+                icon: '🥨',
+                title: 'Pembakaran Roti dalam Oven',
+                category: 'Makanan & Memasak',
+                type: 'both',
+                description: 'Adonan roti mengalami pemanasan yang menyebabkan perubahan fisika dan kimia.',
+                points: ['Pati bergelatinisasi karena panas dan air', 'Protein dalam gluten mengalami denaturasi', 'Pembentukan warna coklat melalui reaksi Maillard'],
+                detail: 'Ketika roti dipanggang dalam oven panas, beberapa proses terjadi sekaligus. Pertama, pati menyerap air dan mengembang (perubahan fisika). Kedua, protein gluten terdenaturasi karena panas (perubahan kimia). Ketiga, terjadi reaksi Maillard antara protein dan gula yang menghasilkan warna coklat dan aroma khas roti panggang (perubahan kimia). Kombinasi ini mengubah adonan putih lembut menjadi roti coklat yang renyah.'
+            },
+            {
+                id: 7,
+                icon: '🚗',
+                title: 'Pembakaran Bahan Bakar',
+                category: 'Transportasi & Energi',
+                type: 'chemical',
+                description: 'Bensin bereaksi dengan oksigen menghasilkan energi mekanik.',
+                points: ['Perubahan kimia menghasilkan energi', 'Menghasilkan gas buang (CO₂ dan H₂O)', 'Menggerakkan piston mesin'],
+                detail: 'Bensin adalah campuran hidrokarbon yang ketika bereaksi dengan oksigen dalam mesin menghasilkan energi besar. Reaksi pembakaran: C_xH_y + O₂ → CO₂ + H₂O + energi. Energi ini diubah menjadi gerak mekanik yang menggerakkan kendaraan. Ini adalah perubahan kimia yang sangat berguna.'
+            },
+            {
+                id: 8,
+                icon: '💊',
+                title: 'Proses Pencernaan',
+                category: 'Kesehatan & Biologi',
+                type: 'chemical',
+                description: 'Enzim dalam mulut menguraikan karbohidrat menjadi gula sederhana.',
+                points: ['Amylase memecah pati menjadi maltosa', 'Terjadi di rongga mulut', 'Memudahkan pencernaan lebih lanjut'],
+                detail: 'Ketika Anda mengunyah makanan, enzim amilase dalam air liur mulai memecah pati menjadi maltosa (gula dua molekul). Proses ini adalah reaksi kimia enzimatis yang mempermudah pencernaan. Pati yang kompleks diubah menjadi gula yang lebih sederhana, terbentuk zat baru dengan sifat berbeda.'
+            },
+            {
+                id: 9,
+                icon: '🔋',
+                title: 'Baterai Alkaline',
+                category: 'Elektronik & Energi',
+                type: 'chemical',
+                description: 'Reaksi redoks dalam baterai menghasilkan arus listrik.',
+                points: ['Reaksi kimia antara zat di dalam baterai', 'Menghasilkan arus listrik untuk perangkat', 'Energi kimia diubah menjadi energi listrik'],
+                detail: 'Baterai alkaline menggunakan reaksi redoks antara seng dan mangan dioksida dalam elektrolit kalium hidroksida. Reaksi ini mengalirkan elektron dari katoda negatif ke anoda positif, menghasilkan arus listrik. Energi kimia dari reaksi ini diubah menjadi energi listrik yang bisa digunakan perangkat elektronik.'
+            },
+            {
+                id: 10,
+                icon: '🌡️',
+                title: 'Pelapasan Panas Tubuh',
+                category: 'Kesehatan & Metabolisme',
+                type: 'chemical',
+                description: 'Metabolisme sel menghasilkan energi panas untuk menjaga suhu tubuh.',
+                points: ['Oksidasi glukosa menghasilkan energi', 'ATP diuraikan untuk menyediakan energi', 'Energi kimia diubah menjadi panas'],
+                detail: 'Dalam mitokondria sel, glukosa dioksidasi melalui respirasi seluler, menghasilkan ATP (adenosin trifosfat). Ketika ATP diuraikan, energi kimia dilepaskan sebagai panas yang mempertahankan suhu tubuh inti 37°C. Proses ini adalah serangkaian reaksi kimia yang sangat penting untuk kehidupan.'
+            },
+            {
+                id: 11,
+                icon: '🧺',
+                title: 'Pemutihan Pakaian dengan Klorin',
+                category: 'Kebersihan & Rumah Tangga',
+                type: 'chemical',
+                description: 'Klorin bereaksi dengan pigmen pewarna pada pakaian untuk melunturkan noda.',
+                points: ['Klorin bereaksi dengan pigmen noda', 'Struktur warna diputuskan oleh klorin', 'Pakaian menjadi lebih putih dan cerah'],
+                detail: 'Pemutih yang mengandung klorin (seperti Clorox) bereaksi secara kimia dengan pigmen pewarna pada pakaian yang bernoda. Klorin menghancurkan struktur kromatik pigmen, memutuskan ikatan warna sehingga noda hilang dan pakaian menjadi putih. Ini adalah perubahan kimia karena terbentuk zat baru (pigmen yang teroksidasi) dan sifat pakaian berubah secara permanen.'
+            },
+            {
+                id: 12,
+                icon: '🔬',
+                title: 'Sterilisasi dengan Alkohol',
+                category: 'Kesehatan & Kebersihan',
+                type: 'chemical',
+                description: 'Alkohol bereaksi dengan protein bakteri, membunuh mikroorganisme.',
+                points: ['Alkohol menembus dinding sel bakteri', 'Merusak protein dan lipid bakteri', 'Menghentikan pertumbuhan bakteri'],
+                detail: 'Alkohol 70% efektif membunuh bakteri karena dapat menembus dinding sel dan bereaksi dengan protein serta lipid di dalamnya. Reaksi kimia ini merusak struktur bakteri dan menyebabkan kematian mikro. Alkohol juga menguap dengan cepat, meninggalkan residu minimal. Ini adalah aplikasi reaksi kimia untuk kesehatan.'
+            }
+        ];
+
+        function renderApps() {
+            const grid = document.getElementById('appGrid');
+            applications.forEach(app => {
+                const card = document.createElement('div');
+                card.className = `app-card ${app.type}`;
+                card.innerHTML = `
+                    <div class="app-header">
+                        <div class="app-icon">${app.icon}</div>
+                        <div class="app-title">${app.title}</div>
+                        <div class="app-category">${app.category}</div>
+                    </div>
+                    <div class="app-content">
+                        <p class="app-description">${app.description}</p>
+                        <ul class="app-points">
+                            ${app.points.map(p => `<li>${p}</li>`).join('')}
+                        </ul>
+                        <span class="app-type">${app.type === 'physical' ? '🔵 Perubahan Fisika' : app.type === 'chemical' ? '🔴 Perubahan Kimia' : '⚪ Kedua-duanya'}</span>
+                    </div>
+                `;
+                card.onclick = () => showDetail(app);
+                grid.appendChild(card);
+            });
+        }
+
+        function showDetail(app) {
+            document.getElementById('modalTitle').textContent = app.title;
+            document.getElementById('modalDetail').innerHTML = `
+                <div class="section">
+                    <h3>Deskripsi</h3>
+                    <p>${app.description}</p>
+                </div>
+                <div class="section">
+                    <h3>Penjelasan Lengkap</h3>
+                    <p>${app.detail}</p>
+                </div>
+                <div class="section">
+                    <h3>Poin-poin Penting</h3>
+                    <ul class="app-points">
+                        ${app.points.map(p => `<li>${p}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="section">
+                    <span class="app-type">${app.type === 'physical' ? '🔵 Perubahan Fisika - Hanya mengubah wujud atau bentuk tanpa menghasilkan zat baru' : app.type === 'chemical' ? '🔴 Perubahan Kimia - Menghasilkan zat baru dengan sifat berbeda' : '⚪ Perubahan Fisika dan Kimia - Melibatkan kedua jenis perubahan'}</span>
+                </div>
+            `;
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('show');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        window.onclick = e => {
+            const modal = document.getElementById('detailModal');
+            if (e.target === modal) modal.classList.remove('show');
+        }
+
+        renderApps();
+    </script>
+</body>
+</html>
